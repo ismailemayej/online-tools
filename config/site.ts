@@ -1,69 +1,121 @@
-export type SiteConfig = typeof siteConfig;
+import {
+  WrenchIcon,
+  DocumentTextIcon,
+  CodeBracketIcon,
+  PhotoIcon,
+  ChartBarIcon,
+  CalculatorIcon,
+  ArrowPathIcon,
+  ChatBubbleLeftEllipsisIcon,
+} from "@heroicons/react/24/outline";
 
 export const siteConfig = {
-  name: "Next.js + HeroUI",
-  description: "Make beautiful websites regardless of your design experience.",
+  name: "ToolKit Pro",
+  description:
+    "Your all-in-one online tools collection for developers, designers, and creators.",
+  url: "https://toolkitpro.vercel.app",
+  links: {
+    github: "https://github.com/yourusername/toolkit-pro",
+    feedback: "https://github.com/yourusername/toolkit-pro/issues",
+    twitter: "https://twitter.com/yourhandle",
+  },
   navItems: [
     {
-      label: "Home",
-      href: "/",
+      label: "Text Tools",
+      href: "/text",
+      icon: DocumentTextIcon,
+      highlight: true,
     },
     {
-      label: "Docs",
-      href: "/docs",
+      label: "Code Tools",
+      href: "/code",
+      icon: CodeBracketIcon,
     },
     {
-      label: "Pricing",
-      href: "/pricing",
+      label: "Image Tools",
+      href: "/image",
+      icon: PhotoIcon,
     },
     {
-      label: "Blog",
-      href: "/blog",
+      label: "Data Tools",
+      href: "/data",
+      icon: ChartBarIcon,
     },
     {
-      label: "About",
-      href: "/about",
+      label: "Calculators",
+      href: "/calculators",
+      icon: CalculatorIcon,
     },
   ],
   navMenuItems: [
     {
-      label: "Profile",
-      href: "/profile",
+      label: "All Tools",
+      href: "/all-tools",
+      icon: WrenchIcon,
     },
     {
-      label: "Dashboard",
-      href: "/dashboard",
+      label: "Text Tools",
+      href: "/text",
+      icon: DocumentTextIcon,
     },
     {
-      label: "Projects",
-      href: "/projects",
+      label: "Code Tools",
+      href: "/code",
+      icon: CodeBracketIcon,
     },
     {
-      label: "Team",
-      href: "/team",
+      label: "Image Tools",
+      href: "/image",
+      icon: PhotoIcon,
     },
     {
-      label: "Calendar",
-      href: "/calendar",
+      label: "Data Tools",
+      href: "/data",
+      icon: ChartBarIcon,
     },
     {
-      label: "Settings",
-      href: "/settings",
+      label: "Calculators",
+      href: "/calculators",
+      icon: CalculatorIcon,
     },
     {
-      label: "Help & Feedback",
-      href: "/help-feedback",
-    },
-    {
-      label: "Logout",
-      href: "/logout",
+      label: "Feedback",
+      href: "/feedback",
+      icon: ChatBubbleLeftEllipsisIcon,
     },
   ],
-  links: {
-    github: "https://github.com/heroui-inc/heroui",
-    twitter: "https://twitter.com/hero_ui",
-    docs: "https://heroui.com",
-    discord: "https://discord.gg/9b6yyZKmH4",
-    sponsor: "https://patreon.com/jrgarciadev",
-  },
+  toolCategories: [
+    {
+      name: "Text",
+      slug: "text",
+      tools: [
+        {
+          name: "Case Converter",
+          description: "Convert text between different cases",
+          href: "/text/case-converter",
+          icon: DocumentTextIcon,
+        },
+        {
+          name: "Word Counter",
+          description: "Count words, characters, and more",
+          href: "/text/word-counter",
+          icon: DocumentTextIcon,
+        },
+      ],
+    },
+    {
+      name: "Code",
+      slug: "code",
+      tools: [
+        {
+          name: "JSON Formatter",
+          description: "Format and validate JSON",
+          href: "/code/json-formatter",
+          icon: CodeBracketIcon,
+        },
+      ],
+    },
+  ],
 };
+
+export type SiteConfig = typeof siteConfig;

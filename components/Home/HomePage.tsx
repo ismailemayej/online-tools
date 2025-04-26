@@ -19,28 +19,15 @@ export default function HomePage() {
     <div className="bg-white dark:bg-gray-900">
       {/* Hero Section */}
       <div className="relative bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-800 dark:to-indigo-800">
-        <div className="max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8 text-center">
+        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
             Free Online Tools for Everyone
           </h1>
-          <p className="mt-6 max-w-3xl mx-auto text-xl text-blue-100">
-            A collection of handy tools to make your life easier. No
-            installation required!
-          </p>
         </div>
       </div>
 
       {/* Popular Tools Section */}
       <div id="tools" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-            Popular Tools
-          </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Our most frequently used tools that help thousands of users daily
-          </p>
-        </div>
-
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 lg:grid-cols-5">
           {tools.map((tool, index) => (
             <Link
