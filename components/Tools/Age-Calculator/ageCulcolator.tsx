@@ -148,7 +148,7 @@ export default function AgeCalculator() {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transition-colors duration-300">
+    <div className="max-w-2xl mx-auto p-6 dark:bg-gray-800 rounded-lg shadow-md transition-colors duration-300">
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center">
           <CalculatorIcon className="h-8 w-8 text-blue-500 dark:text-blue-400 mr-2" />

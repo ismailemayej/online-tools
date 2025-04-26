@@ -1,6 +1,7 @@
 import {
   BanknotesIcon,
   CalculatorIcon,
+  CursorArrowRaysIcon,
   DocumentTextIcon,
   LockClosedIcon,
   QrCodeIcon,
@@ -60,6 +61,14 @@ export const tools = [
     category: "calculators",
     color:
       "bg-yellow-100 text-yellow-600 dark:bg-yellow-900 dark:text-yellow-300",
+  },
+  {
+    name: "Typing Speed Tester",
+    icon: CursorArrowRaysIcon,
+    description: "Test and improve your typing speed and accuracy",
+    href: "/typing-speed-tester",
+    category: "productivity",
+    color: "bg-pink-100 text-pink-600 dark:bg-pink-900 dark:text-pink-300",
   },
 ];
 
