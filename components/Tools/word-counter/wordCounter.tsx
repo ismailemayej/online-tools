@@ -1,11 +1,11 @@
-"use client";
-import { useState, useEffect } from "react";
+'use client';
+import { useState, useEffect } from 'react';
 import {
   DocumentTextIcon,
   ArrowPathIcon,
   ClipboardIcon,
   ChartBarIcon,
-} from "@heroicons/react/24/outline";
+} from '@heroicons/react/24/outline';
 import {
   Card,
   CardHeader,
@@ -14,7 +14,7 @@ import {
   Divider,
   Button,
   Textarea,
-} from "@nextui-org/react";
+} from '@nextui-org/react';
 
 type CountResult = {
   characters: number;
@@ -25,7 +25,7 @@ type CountResult = {
 };
 
 export default function WordCounter() {
-  const [text, setText] = useState<string>("");
+  const [text, setText] = useState<string>('');
   const [counts, setCounts] = useState<CountResult>({
     characters: 0,
     words: 0,
@@ -41,10 +41,10 @@ export default function WordCounter() {
 
   const calculateCounts = () => {
     const characters = text.length;
-    const words = text.trim() === "" ? 0 : text.trim().split(/\s+/).length;
-    const sentences = text.trim() === "" ? 0 : text.split(/[.!?]+/).length - 1;
+    const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+    const sentences = text.trim() === '' ? 0 : text.split(/[.!?]+/).length - 1;
     const paragraphs =
-      text.trim() === ""
+      text.trim() === ''
         ? 0
         : text.split(/\n+/).filter((p) => p.trim().length > 0).length;
     const readingTime = Math.ceil(words / 200); // Average reading speed: 200 words per minute
@@ -63,7 +63,7 @@ export default function WordCounter() {
   };
 
   const resetText = () => {
-    setText("");
+    setText('');
     setCopied(false);
   };
 
@@ -76,7 +76,7 @@ export default function WordCounter() {
   };
 
   const formatNumber = (num: number): string => {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
 
   return (
@@ -103,12 +103,12 @@ export default function WordCounter() {
                 </Button>
                 <Button
                   size="sm"
-                  color={copied ? "success" : "primary"}
+                  color={copied ? 'success' : 'primary'}
                   startContent={<ClipboardIcon className="h-4 w-4" />}
                   onPress={copyToClipboard}
                   isDisabled={!text}
                 >
-                  {copied ? "Copied!" : "Copy"}
+                  {copied ? 'Copied!' : 'Copy'}
                 </Button>
               </div>
             </CardHeader>
@@ -121,7 +121,7 @@ export default function WordCounter() {
                 value={text}
                 onChange={handleTextChange}
                 classNames={{
-                  input: "resize-y min-h-[300px]",
+                  input: 'resize-y min-h-[300px]',
                 }}
               />
             </CardBody>
@@ -177,7 +177,7 @@ export default function WordCounter() {
                   </div>
                   <span className="text-sm font-medium">
                     ~{counts.readingTime} min (
-                    {counts.readingTime > 1 ? "minutes" : "minute"})
+                    {counts.readingTime > 1 ? 'minutes' : 'minute'})
                   </span>
                 </div>
                 <p className="text-xs text-gray-500 dark:text-gray-400">

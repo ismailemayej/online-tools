@@ -1,5 +1,5 @@
 //src/components/navbar.tsx
-"use client";
+'use client';
 import {
   Navbar as HeroUINavbar,
   NavbarContent,
@@ -8,29 +8,29 @@ import {
   NavbarBrand,
   NavbarItem,
   NavbarMenuItem,
-} from "@heroui/navbar";
-import { Button } from "@heroui/button";
-import { Kbd } from "@heroui/kbd";
-import { Link } from "@heroui/link";
-import { Input } from "@heroui/input";
-import { link as linkStyles } from "@heroui/theme";
-import NextLink from "next/link";
-import clsx from "clsx";
+} from '@heroui/navbar';
+import { Button } from '@heroui/button';
+import { Kbd } from '@heroui/kbd';
+import { Link } from '@heroui/link';
+import { Input } from '@heroui/input';
+import { link as linkStyles } from '@heroui/theme';
+import NextLink from 'next/link';
+import clsx from 'clsx';
 
-import { siteConfig } from "@/config/site";
-import { ThemeSwitch } from "@/components/theme-switch";
-import { SearchIcon, Logo } from "@/components/icons";
+import { siteConfig } from '@/config/site';
+import { ThemeSwitch } from '@/components/theme-switch';
+import { SearchIcon, Logo } from '@/components/icons';
 
 export const Navbar = () => {
   const searchInput = (
     <Input
       aria-label="Search tools"
       classNames={{
-        inputWrapper: "bg-default-100",
-        input: "text-sm",
+        inputWrapper: 'bg-default-100',
+        input: 'text-sm',
       }}
       endContent={
-        <Kbd className="hidden lg:inline-block" keys={["command"]}>
+        <Kbd className="hidden lg:inline-block" keys={['command']}>
           K
         </Kbd>
       }
@@ -57,9 +57,9 @@ export const Navbar = () => {
             <NavbarItem key={item.href}>
               <NextLink
                 className={clsx(
-                  linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium hover:text-primary transition-colors",
-                  item.highlight && "text-primary font-medium"
+                  linkStyles({ color: 'foreground' }),
+                  'data-[active=true]:text-primary data-[active=true]:font-medium hover:text-primary transition-colors',
+                  item.highlight && 'text-primary font-medium'
                 )}
                 color="foreground"
                 href={item.href}
@@ -113,7 +113,7 @@ export const Navbar = () => {
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
-                color={index === 0 ? "primary" : "foreground"}
+                color={index === 0 ? 'primary' : 'foreground'}
                 href={item.href}
                 size="lg"
                 className="w-full py-3 px-2 rounded-lg hover:bg-default-100"

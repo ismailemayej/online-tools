@@ -1,5 +1,5 @@
-"use client";
-import { useState, useCallback } from "react";
+'use client';
+import { useState, useCallback } from 'react';
 import {
   LockClosedIcon,
   ClipboardIcon,
@@ -8,7 +8,7 @@ import {
   EyeSlashIcon,
   CheckIcon,
   XMarkIcon,
-} from "@heroicons/react/24/outline";
+} from '@heroicons/react/24/outline';
 import {
   Card,
   CardHeader,
@@ -20,10 +20,10 @@ import {
   Checkbox,
   Tooltip,
   Input,
-} from "@nextui-org/react";
+} from '@nextui-org/react';
 
 export default function PasswordGenerator() {
-  const [password, setPassword] = useState<string>("");
+  const [password, setPassword] = useState<string>('');
   const [length, setLength] = useState<number>(12);
   const [copied, setCopied] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -37,18 +37,18 @@ export default function PasswordGenerator() {
   const generatePassword = useCallback(() => {
     const { uppercase, lowercase, numbers, symbols } = options;
 
-    let charset = "";
-    if (lowercase) charset += "abcdefghijklmnopqrstuvwxyz";
-    if (uppercase) charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    if (numbers) charset += "0123456789";
-    if (symbols) charset += "!@#$%^&*()_+-=[]{}|;:,.<>?";
+    let charset = '';
+    if (lowercase) charset += 'abcdefghijklmnopqrstuvwxyz';
+    if (uppercase) charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    if (numbers) charset += '0123456789';
+    if (symbols) charset += '!@#$%^&*()_+-=[]{}|;:,.<>?';
 
     if (!charset) {
-      setPassword("Select at least one option");
+      setPassword('Select at least one option');
       return;
     }
 
-    let generatedPassword = "";
+    let generatedPassword = '';
     for (let i = 0; i < length; i++) {
       const randomIndex = Math.floor(Math.random() * charset.length);
       generatedPassword += charset[randomIndex];
@@ -59,7 +59,7 @@ export default function PasswordGenerator() {
   }, [length, options]);
 
   const copyToClipboard = async () => {
-    if (password && password !== "Select at least one option") {
+    if (password && password !== 'Select at least one option') {
       await navigator.clipboard.writeText(password);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
@@ -74,7 +74,7 @@ export default function PasswordGenerator() {
   };
 
   const getPasswordStrength = () => {
-    if (!password || password === "Select at least one option") return 0;
+    if (!password || password === 'Select at least one option') return 0;
 
     let strength = 0;
     const { uppercase, lowercase, numbers, symbols } = options;
@@ -93,18 +93,18 @@ export default function PasswordGenerator() {
 
   const strengthColor = () => {
     const strength = getPasswordStrength();
-    if (strength < 40) return "bg-red-500";
-    if (strength < 70) return "bg-yellow-500";
-    return "bg-green-500";
+    if (strength < 40) return 'bg-red-500';
+    if (strength < 70) return 'bg-yellow-500';
+    return 'bg-green-500';
   };
 
   const strengthText = () => {
     const strength = getPasswordStrength();
-    if (strength === 0) return "No password";
-    if (strength < 40) return "Weak";
-    if (strength < 70) return "Moderate";
-    if (strength < 90) return "Strong";
-    return "Very Strong";
+    if (strength === 0) return 'No password';
+    if (strength < 40) return 'Weak';
+    if (strength < 70) return 'Moderate';
+    if (strength < 90) return 'Strong';
+    return 'Very Strong';
   };
 
   return (
@@ -131,12 +131,12 @@ export default function PasswordGenerator() {
           {/* Password Output */}
           <div className="flex gap-2 items-center">
             <Input
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? 'text' : 'password'}
               value={password}
               readOnly
               variant="bordered"
               classNames={{
-                input: "text-lg font-mono",
+                input: 'text-lg font-mono',
               }}
               endContent={
                 <div className="flex gap-1">
@@ -152,15 +152,15 @@ export default function PasswordGenerator() {
                       <EyeIcon className="h-5 w-5" />
                     )}
                   </Button>
-                  <Tooltip content={copied ? "Copied!" : "Copy to clipboard"}>
+                  <Tooltip content={copied ? 'Copied!' : 'Copy to clipboard'}>
                     <Button
                       isIconOnly
                       size="sm"
-                      color={copied ? "success" : "default"}
+                      color={copied ? 'success' : 'default'}
                       variant="light"
                       onPress={copyToClipboard}
                       isDisabled={
-                        !password || password === "Select at least one option"
+                        !password || password === 'Select at least one option'
                       }
                     >
                       <ClipboardIcon className="h-5 w-5" />
@@ -206,28 +206,28 @@ export default function PasswordGenerator() {
           <div className="grid grid-cols-2 gap-4 mt-4">
             <Checkbox
               isSelected={options.lowercase}
-              onChange={() => toggleOption("lowercase")}
+              onChange={() => toggleOption('lowercase')}
               icon={<CheckIcon className="h-4 w-4" />}
             >
               Lowercase (a-z)
             </Checkbox>
             <Checkbox
               isSelected={options.uppercase}
-              onChange={() => toggleOption("uppercase")}
+              onChange={() => toggleOption('uppercase')}
               icon={<CheckIcon className="h-4 w-4" />}
             >
               Uppercase (A-Z)
             </Checkbox>
             <Checkbox
               isSelected={options.numbers}
-              onChange={() => toggleOption("numbers")}
+              onChange={() => toggleOption('numbers')}
               icon={<CheckIcon className="h-4 w-4" />}
             >
               Numbers (0-9)
             </Checkbox>
             <Checkbox
               isSelected={options.symbols}
-              onChange={() => toggleOption("symbols")}
+              onChange={() => toggleOption('symbols')}
               icon={<CheckIcon className="h-4 w-4" />}
             >
               Symbols (!@#$)

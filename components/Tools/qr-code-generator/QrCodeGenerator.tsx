@@ -1,5 +1,5 @@
-"use client";
-import { useState, useRef, useEffect, useCallback } from "react";
+'use client';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import {
   QrCodeIcon,
   ClipboardIcon,
@@ -10,7 +10,7 @@ import {
   UserIcon,
   LinkIcon,
   DocumentTextIcon,
-} from "@heroicons/react/24/outline";
+} from '@heroicons/react/24/outline';
 import {
   Card,
   CardHeader,
@@ -26,10 +26,10 @@ import {
   Tabs,
   Tab,
   Textarea,
-} from "@nextui-org/react";
-import QRCode from "qrcode";
+} from '@nextui-org/react';
+import QRCode from 'qrcode';
 
-type QRContentType = "url" | "text" | "email" | "sms" | "wifi" | "contact";
+type QRContentType = 'url' | 'text' | 'email' | 'sms' | 'wifi' | 'contact';
 
 interface QRContent {
   url: string;
@@ -46,7 +46,7 @@ interface QRContent {
   wifi: {
     ssid: string;
     password: string;
-    encryption: "WPA" | "WEP" | "None";
+    encryption: 'WPA' | 'WEP' | 'None';
   };
   contact: {
     name: string;
@@ -56,58 +56,58 @@ interface QRContent {
 }
 
 export default function QRCodeGenerator() {
-  const [contentType, setContentType] = useState<QRContentType>("url");
+  const [contentType, setContentType] = useState<QRContentType>('url');
   const [content, setContent] = useState<QRContent>({
-    url: "https://example.com",
-    text: "Sample text",
+    url: 'https://example.com',
+    text: 'Sample text',
     email: {
-      address: "",
-      subject: "",
-      body: "",
+      address: '',
+      subject: '',
+      body: '',
     },
     sms: {
-      phone: "",
-      message: "",
+      phone: '',
+      message: '',
     },
     wifi: {
-      ssid: "",
-      password: "",
-      encryption: "WPA",
+      ssid: '',
+      password: '',
+      encryption: 'WPA',
     },
     contact: {
-      name: "",
-      phone: "",
-      email: "",
+      name: '',
+      phone: '',
+      email: '',
     },
   });
-  const [qrCode, setQrCode] = useState<string>("");
+  const [qrCode, setQrCode] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [options, setOptions] = useState({
     size: 200,
     margin: 2,
-    darkColor: "#000000",
-    lightColor: "#ffffff",
-    errorCorrection: "M" as "L" | "M" | "Q" | "H",
+    darkColor: '#000000',
+    lightColor: '#ffffff',
+    errorCorrection: 'M' as 'L' | 'M' | 'Q' | 'H',
   });
   const [copied, setCopied] = useState<boolean>(false);
   const qrRef = useRef<HTMLDivElement>(null);
 
   const generateQRPayload = () => {
     switch (contentType) {
-      case "url":
+      case 'url':
         return content.url;
-      case "text":
+      case 'text':
         return content.text;
-      case "email":
+      case 'email':
         return `mailto:${content.email.address}?subject=${encodeURIComponent(content.email.subject)}&body=${encodeURIComponent(content.email.body)}`;
-      case "sms":
+      case 'sms':
         return `smsto:${content.sms.phone}:${encodeURIComponent(content.sms.message)}`;
-      case "wifi":
+      case 'wifi':
         return `WIFI:T:${content.wifi.encryption};S:${content.wifi.ssid};P:${content.wifi.password};;`;
-      case "contact":
+      case 'contact':
         return `BEGIN:VCARD\nVERSION:3.0\nFN:${content.contact.name}\nTEL:${content.contact.phone}\nEMAIL:${content.contact.email}\nEND:VCARD`;
       default:
-        return "";
+        return '';
     }
   };
 
@@ -141,7 +141,7 @@ export default function QRCodeGenerator() {
   const downloadQRCode = () => {
     if (!qrCode) return;
 
-    const link = document.createElement("a");
+    const link = document.createElement('a');
     link.href = qrCode;
     link.download = `qr-code-${contentType}-${new Date().getTime()}.png`;
     document.body.appendChild(link);
@@ -162,7 +162,7 @@ export default function QRCodeGenerator() {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      console.error("Failed to copy:", err);
+      console.error('Failed to copy:', err);
     }
   };
 
@@ -181,10 +181,10 @@ export default function QRCodeGenerator() {
     if (subField) {
       setContent((prev) => ({
         ...prev,
-        [contentType]: {
-          ...prev[contentType],
-          [subField]: value,
-        },
+        [contentType]:
+          typeof prev[contentType] === 'object' && prev[contentType] !== null
+            ? { ...prev[contentType], [subField]: value }
+            : prev[contentType],
       }));
     } else {
       setContent((prev) => ({
@@ -196,31 +196,31 @@ export default function QRCodeGenerator() {
 
   const renderContentInputs = () => {
     switch (contentType) {
-      case "url":
+      case 'url':
         return (
           <Input
             label="URL"
             placeholder="https://example.com"
             value={content.url}
-            onValueChange={(value) => handleContentChange("url", value)}
+            onValueChange={(value) => handleContentChange('url', value)}
             startContent={<LinkIcon className="h-5 w-5 text-gray-400" />}
             fullWidth
           />
         );
-      case "text":
+      case 'text':
         return (
           <Textarea
             label="Text"
             placeholder="Enter text to encode"
             value={content.text}
-            onValueChange={(value) => handleContentChange("text", value)}
+            onValueChange={(value) => handleContentChange('text', value)}
             startContent={
               <DocumentTextIcon className="h-5 w-5 text-gray-400" />
             }
             minRows={4}
           />
         );
-      case "email":
+      case 'email':
         return (
           <div className="space-y-4">
             <Input
@@ -228,7 +228,7 @@ export default function QRCodeGenerator() {
               placeholder="recipient@example.com"
               value={content.email.address}
               onValueChange={(value) =>
-                handleContentChange("email", value, "address")
+                handleContentChange('email', value, 'address')
               }
               startContent={<EnvelopeIcon className="h-5 w-5 text-gray-400" />}
               fullWidth
@@ -238,7 +238,7 @@ export default function QRCodeGenerator() {
               placeholder="Email subject"
               value={content.email.subject}
               onValueChange={(value) =>
-                handleContentChange("email", value, "subject")
+                handleContentChange('email', value, 'subject')
               }
               fullWidth
             />
@@ -247,13 +247,13 @@ export default function QRCodeGenerator() {
               placeholder="Email content"
               value={content.email.body}
               onValueChange={(value) =>
-                handleContentChange("email", value, "body")
+                handleContentChange('email', value, 'body')
               }
               minRows={3}
             />
           </div>
         );
-      case "sms":
+      case 'sms':
         return (
           <div className="space-y-4">
             <Input
@@ -261,7 +261,7 @@ export default function QRCodeGenerator() {
               placeholder="+1234567890"
               value={content.sms.phone}
               onValueChange={(value) =>
-                handleContentChange("sms", value, "phone")
+                handleContentChange('sms', value, 'phone')
               }
               fullWidth
             />
@@ -270,13 +270,13 @@ export default function QRCodeGenerator() {
               placeholder="Text message content"
               value={content.sms.message}
               onValueChange={(value) =>
-                handleContentChange("sms", value, "message")
+                handleContentChange('sms', value, 'message')
               }
               minRows={3}
             />
           </div>
         );
-      case "wifi":
+      case 'wifi':
         return (
           <div className="space-y-4">
             <Input
@@ -284,7 +284,7 @@ export default function QRCodeGenerator() {
               placeholder="MyWiFiNetwork"
               value={content.wifi.ssid}
               onValueChange={(value) =>
-                handleContentChange("wifi", value, "ssid")
+                handleContentChange('wifi', value, 'ssid')
               }
               startContent={<WifiIcon className="h-5 w-5 text-gray-400" />}
               fullWidth
@@ -294,7 +294,7 @@ export default function QRCodeGenerator() {
               placeholder="WiFi password"
               value={content.wifi.password}
               onValueChange={(value) =>
-                handleContentChange("wifi", value, "password")
+                handleContentChange('wifi', value, 'password')
               }
               type="password"
               fullWidth
@@ -303,7 +303,7 @@ export default function QRCodeGenerator() {
               label="Encryption"
               selectedKeys={[content.wifi.encryption]}
               onChange={(e) =>
-                handleContentChange("wifi", e.target.value, "encryption")
+                handleContentChange('wifi', e.target.value, 'encryption')
               }
             >
               <SelectItem key="WPA" value="WPA">
@@ -318,7 +318,7 @@ export default function QRCodeGenerator() {
             </Select>
           </div>
         );
-      case "contact":
+      case 'contact':
         return (
           <div className="space-y-4">
             <Input
@@ -326,7 +326,7 @@ export default function QRCodeGenerator() {
               placeholder="John Doe"
               value={content.contact.name}
               onValueChange={(value) =>
-                handleContentChange("contact", value, "name")
+                handleContentChange('contact', value, 'name')
               }
               startContent={<UserIcon className="h-5 w-5 text-gray-400" />}
               fullWidth
@@ -336,7 +336,7 @@ export default function QRCodeGenerator() {
               placeholder="+1234567890"
               value={content.contact.phone}
               onValueChange={(value) =>
-                handleContentChange("contact", value, "phone")
+                handleContentChange('contact', value, 'phone')
               }
               fullWidth
             />
@@ -345,7 +345,7 @@ export default function QRCodeGenerator() {
               placeholder="contact@example.com"
               value={content.contact.email}
               onValueChange={(value) =>
-                handleContentChange("contact", value, "email")
+                handleContentChange('contact', value, 'email')
               }
               fullWidth
             />
@@ -387,36 +387,12 @@ export default function QRCodeGenerator() {
                   setContentType(key as QRContentType)
                 }
               >
-                <Tab
-                  key="url"
-                  title="URL"
-                  icon={<LinkIcon className="h-4 w-4" />}
-                />
-                <Tab
-                  key="text"
-                  title="Text"
-                  icon={<DocumentTextIcon className="h-4 w-4" />}
-                />
-                <Tab
-                  key="email"
-                  title="Email"
-                  icon={<EnvelopeIcon className="h-4 w-4" />}
-                />
-                <Tab
-                  key="sms"
-                  title="SMS"
-                  icon={<ChatBubbleBottomCenterTextIcon className="h-4 w-4" />}
-                />
-                <Tab
-                  key="wifi"
-                  title="WiFi"
-                  icon={<WifiIcon className="h-4 w-4" />}
-                />
-                <Tab
-                  key="contact"
-                  title="Contact"
-                  icon={<UserIcon className="h-4 w-4" />}
-                />
+                <Tab key="url" title="URL" />
+                <Tab key="text" title="Text" />
+                <Tab key="email" title="Email" />
+                <Tab key="sms" title="SMS" />
+                <Tab key="wifi" title="WiFi" />
+                <Tab key="contact" title="Contact" />
               </Tabs>
 
               <div className="mt-4">{renderContentInputs()}</div>
@@ -428,7 +404,7 @@ export default function QRCodeGenerator() {
                   label="Error Correction"
                   selectedKeys={[options.errorCorrection]}
                   onChange={(e) =>
-                    handleOptionChange("errorCorrection", e.target.value)
+                    handleOptionChange('errorCorrection', e.target.value)
                   }
                 >
                   <SelectItem key="L" value="L">
@@ -449,7 +425,7 @@ export default function QRCodeGenerator() {
                   label="Size"
                   selectedKeys={[options.size.toString()]}
                   onChange={(e) =>
-                    handleOptionChange("size", parseInt(e.target.value))
+                    handleOptionChange('size', parseInt(e.target.value))
                   }
                 >
                   <SelectItem key="100" value="100">
@@ -473,7 +449,7 @@ export default function QRCodeGenerator() {
                   label="Dark Color"
                   value={options.darkColor}
                   onChange={(e) =>
-                    handleOptionChange("darkColor", e.target.value)
+                    handleOptionChange('darkColor', e.target.value)
                   }
                 />
                 <Input
@@ -481,7 +457,7 @@ export default function QRCodeGenerator() {
                   label="Light Color"
                   value={options.lightColor}
                   onChange={(e) =>
-                    handleOptionChange("lightColor", e.target.value)
+                    handleOptionChange('lightColor', e.target.value)
                   }
                 />
               </div>
@@ -515,9 +491,9 @@ export default function QRCodeGenerator() {
                     />
                   </div>
                   <div className="flex gap-2">
-                    <Tooltip content={copied ? "Copied!" : "Copy to clipboard"}>
+                    <Tooltip content={copied ? 'Copied!' : 'Copy to clipboard'}>
                       <Button
-                        color={copied ? "success" : "default"}
+                        color={copied ? 'success' : 'default'}
                         startContent={<ClipboardIcon className="h-5 w-5" />}
                         onPress={copyToClipboard}
                         isDisabled={!qrCode}

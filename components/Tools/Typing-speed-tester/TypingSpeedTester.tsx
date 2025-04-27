@@ -1,6 +1,5 @@
-"use client";
-
-import { useState, useEffect, useRef, useCallback } from "react";
+'use client';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import {
   KeyboardIcon,
   TimerIcon,
@@ -9,19 +8,19 @@ import {
   ClockIcon,
   SunIcon,
   MoonIcon,
-} from "lucide-react";
+} from 'lucide-react';
 
 const sampleTexts = [
-  "The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs. How vexingly quick daft zebras jump!",
-  "Programming is the art of telling another human what one wants the computer to do. Clean code always looks like it was written by someone who cares.",
-  "Success is not final, failure is not fatal: it is the courage to continue that counts. The only way to do great work is to love what you do.",
-  "The universe is under no obligation to make sense to you. Science is not only a disciple of reason but also one of romance and passion.",
-  "Music is the divine way to tell beautiful, poetic things to the heart. Art enables us to find ourselves and lose ourselves at the same time.",
+  'The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs. How vexingly quick daft zebras jump!',
+  'Programming is the art of telling another human what one wants the computer to do. Clean code always looks like it was written by someone who cares.',
+  'Success is not final, failure is not fatal: it is the courage to continue that counts. The only way to do great work is to love what you do.',
+  'The universe is under no obligation to make sense to you. Science is not only a disciple of reason but also one of romance and passion.',
+  'Music is the divine way to tell beautiful, poetic things to the heart. Art enables us to find ourselves and lose ourselves at the same time.',
 ];
 
 export default function TypingSpeedTester() {
-  const [text, setText] = useState("");
-  const [userInput, setUserInput] = useState("");
+  const [text, setText] = useState('');
+  const [userInput, setUserInput] = useState('');
   const [timer, setTimer] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
@@ -41,7 +40,7 @@ export default function TypingSpeedTester() {
     // Check for user's preferred color scheme
     if (
       window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
+      window.matchMedia('(prefers-color-scheme: dark)').matches
     ) {
       setDarkMode(true);
     }
@@ -126,7 +125,7 @@ export default function TypingSpeedTester() {
     const randomText =
       sampleTexts[Math.floor(Math.random() * sampleTexts.length)];
     setText(randomText);
-    setUserInput("");
+    setUserInput('');
     setTimer(0);
     setIsActive(false);
     setIsComplete(false);
@@ -143,20 +142,20 @@ export default function TypingSpeedTester() {
   };
 
   const renderTextWithHighlighting = () => {
-    return text.split("").map((char, index) => {
-      let className = "";
+    return text.split('').map((char, index) => {
+      let className = '';
 
       if (index < userInput.length) {
         className =
           userInput[index] === char
             ? darkMode
-              ? "text-green-400"
-              : "text-green-600"
+              ? 'text-green-400'
+              : 'text-green-600'
             : darkMode
-              ? "text-red-400 bg-red-900/30"
-              : "text-red-600 bg-red-100";
+              ? 'text-red-400 bg-red-900/30'
+              : 'text-red-600 bg-red-100';
       } else if (index === userInput.length) {
-        className = darkMode ? "bg-blue-900/50" : "bg-blue-100";
+        className = darkMode ? 'bg-blue-900/50' : 'bg-blue-100';
       }
 
       return (
@@ -169,10 +168,10 @@ export default function TypingSpeedTester() {
 
   return (
     <div
-      className={`min-h-screen flex flex-col items-center justify-center p-4 transition-colors duration-300 ${darkMode ? "bg-gray-900 text-gray-100" : "bg-gradient-to-br from-blue-50 to-indigo-50 text-gray-800"}`}
+      className={`min-h-screen flex flex-col items-center justify-center p-4 transition-colors duration-300 ${darkMode ? 'bg-gray-900 text-gray-100' : 'bg-gradient-to-br from-blue-50 to-indigo-50 text-gray-800'}`}
     >
       <div
-        className={`w-full rounded-2xl shadow-xl overflow-hidden transition-colors duration-300 ${darkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"}`}
+        className={`w-full rounded-2xl shadow-xl overflow-hidden transition-colors duration-300 ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}
       >
         {/* Header */}
         <div className="bg-gradient-to-r from-indigo-600 to-blue-600 p-6 text-white flex justify-between items-center">
@@ -187,9 +186,9 @@ export default function TypingSpeedTester() {
           </div>
           <button
             onClick={toggleDarkMode}
-            className={`p-2 rounded-full ${darkMode ? "bg-gray-700 text-yellow-300" : "bg-blue-700 text-white"}`}
+            className={`p-2 rounded-full ${darkMode ? 'bg-gray-700 text-yellow-300' : 'bg-blue-700 text-white'}`}
             aria-label={
-              darkMode ? "Switch to light mode" : "Switch to dark mode"
+              darkMode ? 'Switch to light mode' : 'Switch to dark mode'
             }
           >
             {darkMode ? (
@@ -205,23 +204,23 @@ export default function TypingSpeedTester() {
           {/* Stats bar */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div
-              className={`p-4 rounded-lg flex items-center gap-3 ${darkMode ? "bg-gray-700" : "bg-blue-50"}`}
+              className={`p-4 rounded-lg flex items-center gap-3 ${darkMode ? 'bg-gray-700' : 'bg-blue-50'}`}
             >
               <div
-                className={`p-2 rounded-full ${darkMode ? "bg-gray-600" : "bg-blue-100"}`}
+                className={`p-2 rounded-full ${darkMode ? 'bg-gray-600' : 'bg-blue-100'}`}
               >
                 <GaugeIcon
-                  className={`w-5 h-5 ${darkMode ? "text-blue-400" : "text-blue-600"}`}
+                  className={`w-5 h-5 ${darkMode ? 'text-blue-400' : 'text-blue-600'}`}
                 />
               </div>
               <div>
                 <p
-                  className={`text-sm ${darkMode ? "text-gray-300" : "text-gray-600"}`}
+                  className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}
                 >
                   Speed
                 </p>
                 <p
-                  className={`text-xl font-bold ${darkMode ? "text-blue-400" : "text-blue-600"}`}
+                  className={`text-xl font-bold ${darkMode ? 'text-blue-400' : 'text-blue-600'}`}
                 >
                   {stats.wpm} WPM
                 </p>
@@ -229,23 +228,23 @@ export default function TypingSpeedTester() {
             </div>
 
             <div
-              className={`p-4 rounded-lg flex items-center gap-3 ${darkMode ? "bg-gray-700" : "bg-green-50"}`}
+              className={`p-4 rounded-lg flex items-center gap-3 ${darkMode ? 'bg-gray-700' : 'bg-green-50'}`}
             >
               <div
-                className={`p-2 rounded-full ${darkMode ? "bg-gray-600" : "bg-green-100"}`}
+                className={`p-2 rounded-full ${darkMode ? 'bg-gray-600' : 'bg-green-100'}`}
               >
                 <CheckCircleIcon
-                  className={`w-5 h-5 ${darkMode ? "text-green-400" : "text-green-600"}`}
+                  className={`w-5 h-5 ${darkMode ? 'text-green-400' : 'text-green-600'}`}
                 />
               </div>
               <div>
                 <p
-                  className={`text-sm ${darkMode ? "text-gray-300" : "text-gray-600"}`}
+                  className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}
                 >
                   Accuracy
                 </p>
                 <p
-                  className={`text-xl font-bold ${darkMode ? "text-green-400" : "text-green-600"}`}
+                  className={`text-xl font-bold ${darkMode ? 'text-green-400' : 'text-green-600'}`}
                 >
                   {stats.accuracy}%
                 </p>
@@ -253,23 +252,23 @@ export default function TypingSpeedTester() {
             </div>
 
             <div
-              className={`p-4 rounded-lg flex items-center gap-3 ${darkMode ? "bg-gray-700" : "bg-purple-50"}`}
+              className={`p-4 rounded-lg flex items-center gap-3 ${darkMode ? 'bg-gray-700' : 'bg-purple-50'}`}
             >
               <div
-                className={`p-2 rounded-full ${darkMode ? "bg-gray-600" : "bg-purple-100"}`}
+                className={`p-2 rounded-full ${darkMode ? 'bg-gray-600' : 'bg-purple-100'}`}
               >
                 <ClockIcon
-                  className={`w-5 h-5 ${darkMode ? "text-purple-400" : "text-purple-600"}`}
+                  className={`w-5 h-5 ${darkMode ? 'text-purple-400' : 'text-purple-600'}`}
                 />
               </div>
               <div>
                 <p
-                  className={`text-sm ${darkMode ? "text-gray-300" : "text-gray-600"}`}
+                  className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}
                 >
                   Time
                 </p>
                 <p
-                  className={`text-xl font-bold ${darkMode ? "text-purple-400" : "text-purple-600"}`}
+                  className={`text-xl font-bold ${darkMode ? 'text-purple-400' : 'text-purple-600'}`}
                 >
                   {timer}s
                 </p>
@@ -277,23 +276,23 @@ export default function TypingSpeedTester() {
             </div>
 
             <div
-              className={`p-4 rounded-lg flex items-center gap-3 ${darkMode ? "bg-gray-700" : "bg-amber-50"}`}
+              className={`p-4 rounded-lg flex items-center gap-3 ${darkMode ? 'bg-gray-700' : 'bg-amber-50'}`}
             >
               <div
-                className={`p-2 rounded-full ${darkMode ? "bg-gray-600" : "bg-amber-100"}`}
+                className={`p-2 rounded-full ${darkMode ? 'bg-gray-600' : 'bg-amber-100'}`}
               >
                 <TimerIcon
-                  className={`w-5 h-5 ${darkMode ? "text-amber-400" : "text-amber-600"}`}
+                  className={`w-5 h-5 ${darkMode ? 'text-amber-400' : 'text-amber-600'}`}
                 />
               </div>
               <div>
                 <p
-                  className={`text-sm ${darkMode ? "text-gray-300" : "text-gray-600"}`}
+                  className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}
                 >
                   Progress
                 </p>
                 <p
-                  className={`text-xl font-bold ${darkMode ? "text-amber-400" : "text-amber-600"}`}
+                  className={`text-xl font-bold ${darkMode ? 'text-amber-400' : 'text-amber-600'}`}
                 >
                   {text.length > 0
                     ? Math.round((userInput.length / text.length) * 100)
@@ -307,7 +306,7 @@ export default function TypingSpeedTester() {
           {/* Text display */}
           <div
             ref={textRef}
-            className={`p-6 rounded-lg border text-2xl leading-relaxed min-h-32 font-mono ${darkMode ? "bg-gray-700 border-gray-600" : "bg-gray-50 border-gray-200"}`}
+            className={`p-6 rounded-lg border text-2xl leading-relaxed min-h-32 font-mono ${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-gray-50 border-gray-200'}`}
           >
             {renderTextWithHighlighting()}
           </div>
@@ -320,11 +319,11 @@ export default function TypingSpeedTester() {
               value={userInput}
               onChange={handleInputChange}
               disabled={isComplete}
-              className={`w-full p-4 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 py-6 text-lg ${darkMode ? "bg-gray-700 border-gray-600 text-white placeholder-gray-400" : "border-gray-300"}`}
+              className={`w-full p-4 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 py-6 text-lg ${darkMode ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' : 'border-gray-300'}`}
               placeholder={
                 isComplete
-                  ? "Test completed! Click restart to try again"
-                  : "Start typing here..."
+                  ? 'Test completed! Click restart to try again'
+                  : 'Start typing here...'
               }
               autoFocus
             />
@@ -332,7 +331,7 @@ export default function TypingSpeedTester() {
             <div className="flex justify-between items-center">
               <button
                 onClick={resetTest}
-                className={`px-6 py-3 rounded-lg font-medium transition flex items-center gap-2 ${darkMode ? "bg-gray-700 hover:bg-gray-600 text-gray-100" : "bg-gray-100 hover:bg-gray-200 text-gray-800"}`}
+                className={`px-6 py-3 rounded-lg font-medium transition flex items-center gap-2 ${darkMode ? 'bg-gray-700 hover:bg-gray-600 text-gray-100' : 'bg-gray-100 hover:bg-gray-200 text-gray-800'}`}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -351,7 +350,7 @@ export default function TypingSpeedTester() {
 
               {isComplete && (
                 <div
-                  className={`px-4 py-2 rounded-lg flex items-center gap-2 ${darkMode ? "bg-green-900/50 text-green-300" : "bg-green-100 text-green-800"}`}
+                  className={`px-4 py-2 rounded-lg flex items-center gap-2 ${darkMode ? 'bg-green-900/50 text-green-300' : 'bg-green-100 text-green-800'}`}
                 >
                   <CheckCircleIcon className="w-5 h-5" />
                   Test completed!
@@ -364,7 +363,7 @@ export default function TypingSpeedTester() {
 
       {/* Footer */}
       <div
-        className={`mt-8 text-center ${darkMode ? "text-gray-400" : "text-gray-600"}`}
+        className={`mt-8 text-center ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}
       >
         <p>
           Tip: Try to type without looking at your keyboard for best results

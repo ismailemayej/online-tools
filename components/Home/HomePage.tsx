@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {
   ArrowRightIcon,
   CameraIcon,
@@ -7,10 +7,10 @@ import {
   CodeBracketIcon,
   DocumentTextIcon,
   GlobeAltIcon,
-} from "@heroicons/react/24/outline";
-import Link from "next/link";
-import { categories, tools } from "./tools";
-import { useState } from "react";
+} from '@heroicons/react/24/outline';
+import Link from 'next/link';
+import { categories, tools } from './tools';
+import { useState } from 'react';
 
 export default function HomePage() {
   const [hoveredTool, setHoveredTool] = useState<number | null>(null);
@@ -33,18 +33,18 @@ export default function HomePage() {
             <Link
               key={tool.name}
               href={tool.href}
-              className={`relative group col-span-1 flex flex-col items-center p-6 rounded-2xl bg-white dark:bg-gray-800 shadow-md hover:shadow-xl transition-all duration-300 ${hoveredTool === index ? "ring-2 ring-blue-500 scale-105" : ""}`}
+              className={`relative group col-span-1 flex flex-col items-center p-6 rounded-2xl bg-white dark:bg-gray-800 shadow-md hover:shadow-xl transition-all duration-300 ${hoveredTool === index ? 'ring-2 ring-blue-500 scale-105' : ''}`}
               onMouseEnter={() => setHoveredTool(index)}
               onMouseLeave={() => setHoveredTool(null)}
             >
               {/* Animated Background Effect */}
               <div
-                className={`absolute inset-0 rounded-2xl ${tool.color.split(" ")[0]} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
+                className={`absolute inset-0 rounded-2xl ${tool.color.split(' ')[0]} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
               ></div>
 
               {/* Large Interactive Icon */}
               <div
-                className={`mb-6 p-5 rounded-full ${tool.color} transition-all duration-300 ${hoveredTool === index ? "scale-110" : ""}`}
+                className={`mb-6 p-5 rounded-full ${tool.color} transition-all duration-300 ${hoveredTool === index ? 'scale-110' : ''}`}
               >
                 <tool.icon className="h-10 w-10" />
               </div>
@@ -83,46 +83,46 @@ export default function HomePage() {
           <div className="mt-16 grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
             {[
               {
-                name: "Instant Results",
+                name: 'Instant Results',
                 description:
-                  "Get immediate outputs without any processing delays or waiting time.",
+                  'Get immediate outputs without any processing delays or waiting time.',
                 icon: ClockIcon,
-                color: "bg-blue-500",
+                color: 'bg-blue-500',
               },
               {
-                name: "No Installation",
+                name: 'No Installation',
                 description:
-                  "All tools work directly in your browser with zero setup required.",
+                  'All tools work directly in your browser with zero setup required.',
                 icon: GlobeAltIcon,
-                color: "bg-green-500",
+                color: 'bg-green-500',
               },
               {
-                name: "Privacy Focused",
+                name: 'Privacy Focused',
                 description:
                   "Your data never leaves your browser - we don't store or track anything.",
                 icon: DocumentTextIcon,
-                color: "bg-purple-500",
+                color: 'bg-purple-500',
               },
               {
-                name: "Regular Updates",
+                name: 'Regular Updates',
                 description:
-                  "We constantly improve and add new tools based on user feedback.",
+                  'We constantly improve and add new tools based on user feedback.',
                 icon: CodeBracketIcon,
-                color: "bg-indigo-500",
+                color: 'bg-indigo-500',
               },
               {
-                name: "Mobile Friendly",
+                name: 'Mobile Friendly',
                 description:
-                  "All tools work perfectly on any device, from phones to desktops.",
+                  'All tools work perfectly on any device, from phones to desktops.',
                 icon: CameraIcon,
-                color: "bg-pink-500",
+                color: 'bg-pink-500',
               },
               {
-                name: "Completely Free",
+                name: 'Completely Free',
                 description:
-                  "Access all features without any hidden costs or premium tiers.",
+                  'Access all features without any hidden costs or premium tiers.',
                 icon: ChartBarIcon,
-                color: "bg-orange-500",
+                color: 'bg-orange-500',
               },
             ].map((feature) => (
               <div

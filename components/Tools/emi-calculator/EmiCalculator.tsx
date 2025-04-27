@@ -1,6 +1,5 @@
-"use client";
-
-import { useState, useEffect } from "react";
+'use client';
+import { useState, useEffect } from 'react';
 import {
   ArrowRightIcon,
   CurrencyDollarIcon,
@@ -8,8 +7,7 @@ import {
   ClockIcon,
   SunIcon,
   MoonIcon,
-} from "@heroicons/react/24/solid";
-
+} from '@heroicons/react/24/solid';
 export default function EMICalculatorPage() {
   const [loanAmount, setLoanAmount] = useState<number>(100000);
   const [interestRate, setInterestRate] = useState<number>(8.5);
@@ -23,7 +21,7 @@ export default function EMICalculatorPage() {
   useEffect(() => {
     if (
       window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
+      window.matchMedia('(prefers-color-scheme: dark)').matches
     ) {
       setDarkMode(true);
     }
@@ -53,11 +51,11 @@ export default function EMICalculatorPage() {
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-300 ${darkMode ? "bg-gray-900 text-gray-100" : "bg-gradient-to-br from-indigo-50 to-blue-100"}`}
+      className={`min-h-screen transition-colors duration-300 ${darkMode ? 'bg-gray-900 text-gray-100' : 'bg-gradient-to-br from-indigo-50 to-blue-100'}`}
     >
       <div className="w-full max-w-6xl mx-auto p-4">
         <div
-          className={`rounded-3xl shadow-xl overflow-hidden transition-colors duration-300 ${darkMode ? "bg-gray-800" : "bg-white"}`}
+          className={`rounded-3xl shadow-xl overflow-hidden transition-colors duration-300 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}
         >
           {/* Header with dark mode toggle */}
           <div
@@ -73,9 +71,9 @@ export default function EMICalculatorPage() {
             </div>
             <button
               onClick={toggleDarkMode}
-              className={`p-2 rounded-full ${darkMode ? "bg-gray-700 text-yellow-300" : "bg-blue-700 text-white"}`}
+              className={`p-2 rounded-full ${darkMode ? 'bg-gray-700 text-yellow-300' : 'bg-blue-700 text-white'}`}
               aria-label={
-                darkMode ? "Switch to light mode" : "Switch to dark mode"
+                darkMode ? 'Switch to light mode' : 'Switch to dark mode'
               }
             >
               {darkMode ? (
@@ -94,7 +92,7 @@ export default function EMICalculatorPage() {
                 <div className="space-y-4">
                   <div className="space-y-1">
                     <label
-                      className={`block text-sm font-medium mb-1 flex items-center ${darkMode ? "text-gray-300" : "text-gray-700"}`}
+                      className={`flex text-sm font-medium mb-1 items-center ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}
                     >
                       <CurrencyDollarIcon className="w-5 h-5 mr-2 text-indigo-400" />
                       Loan Amount (৳)
@@ -104,12 +102,12 @@ export default function EMICalculatorPage() {
                         type="number"
                         value={loanAmount}
                         onChange={(e) => setLoanAmount(Number(e.target.value))}
-                        className={`w-full border rounded-lg py-3 px-4 pl-10 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition ${darkMode ? "bg-gray-700 border-gray-600 text-white" : "border-gray-300"}`}
+                        className={`w-full border rounded-lg py-3 px-4 pl-10 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'border-gray-300'}`}
                         placeholder="100,000"
                         min="0"
                       />
                       <span
-                        className={`absolute left-3 top-3 ${darkMode ? "text-gray-400" : "text-gray-500"}`}
+                        className={`absolute left-3 top-3 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}
                       >
                         ৳
                       </span>
@@ -118,7 +116,7 @@ export default function EMICalculatorPage() {
 
                   <div className="space-y-1">
                     <label
-                      className={`block text-sm font-medium mb-1 flex items-center ${darkMode ? "text-gray-300" : "text-gray-700"}`}
+                      className={`text-sm font-medium mb-1 flex items-center ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}
                     >
                       <ScaleIcon className="w-5 h-5 mr-2 text-indigo-400" />
                       Interest Rate (%)
@@ -130,13 +128,13 @@ export default function EMICalculatorPage() {
                         onChange={(e) =>
                           setInterestRate(Number(e.target.value))
                         }
-                        className={`w-full border rounded-lg py-3 px-4 pl-10 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition ${darkMode ? "bg-gray-700 border-gray-600 text-white" : "border-gray-300"}`}
+                        className={`w-full border rounded-lg py-3 px-4 pl-10 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'border-gray-300'}`}
                         placeholder="8.5"
                         step="0.01"
                         min="0"
                       />
                       <span
-                        className={`absolute left-3 top-3 ${darkMode ? "text-gray-400" : "text-gray-500"}`}
+                        className={`absolute left-3 top-3 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}
                       >
                         %
                       </span>
@@ -145,7 +143,7 @@ export default function EMICalculatorPage() {
 
                   <div className="space-y-1">
                     <label
-                      className={`block text-sm font-medium mb-1 flex items-center ${darkMode ? "text-gray-300" : "text-gray-700"}`}
+                      className={`flex text-sm font-medium mb-1 items-center ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}
                     >
                       <ClockIcon className="w-5 h-5 mr-2 text-indigo-400" />
                       Loan Tenure (Years)
@@ -154,7 +152,7 @@ export default function EMICalculatorPage() {
                       type="number"
                       value={tenure}
                       onChange={(e) => setTenure(Number(e.target.value))}
-                      className={`w-full border rounded-lg py-3 px-4 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition ${darkMode ? "bg-gray-700 border-gray-600 text-white" : "border-gray-300"}`}
+                      className={`w-full border rounded-lg py-3 px-4 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'border-gray-300'}`}
                       placeholder="5"
                       min="1"
                     />
@@ -174,23 +172,23 @@ export default function EMICalculatorPage() {
             {/* Results section - bottom on mobile, right side on desktop */}
             {emi !== null && (
               <div
-                className={`w-full lg:w-1/2 p-6 md:p-8 ${darkMode ? "lg:border-l border-gray-700" : "lg:border-l border-gray-200"}`}
+                className={`w-full lg:w-1/2 p-6 md:p-8 ${darkMode ? 'lg:border-l border-gray-700' : 'lg:border-l border-gray-200'}`}
               >
                 <div
-                  className={`rounded-xl p-6 shadow-inner ${darkMode ? "bg-gray-700" : "bg-blue-50"}`}
+                  className={`rounded-xl p-6 shadow-inner ${darkMode ? 'bg-gray-700' : 'bg-blue-50'}`}
                 >
                   <h3
-                    className={`text-lg font-semibold mb-4 ${darkMode ? "text-white" : "text-gray-800"}`}
+                    className={`text-lg font-semibold mb-4 ${darkMode ? 'text-white' : 'text-gray-800'}`}
                   >
                     Loan Summary
                   </h3>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div
-                      className={`p-4 rounded-lg ${darkMode ? "bg-gray-600" : "bg-white"} shadow-sm`}
+                      className={`p-4 rounded-lg ${darkMode ? 'bg-gray-600' : 'bg-white'} shadow-sm`}
                     >
                       <p
-                        className={`text-sm ${darkMode ? "text-gray-300" : "text-gray-600"}`}
+                        className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}
                       >
                         Monthly Payment
                       </p>
@@ -200,10 +198,10 @@ export default function EMICalculatorPage() {
                     </div>
 
                     <div
-                      className={`p-4 rounded-lg ${darkMode ? "bg-gray-600" : "bg-white"} shadow-sm`}
+                      className={`p-4 rounded-lg ${darkMode ? 'bg-gray-600' : 'bg-white'} shadow-sm`}
                     >
                       <p
-                        className={`text-sm ${darkMode ? "text-gray-300" : "text-gray-600"}`}
+                        className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}
                       >
                         Total Interest
                       </p>
@@ -213,10 +211,10 @@ export default function EMICalculatorPage() {
                     </div>
 
                     <div
-                      className={`p-4 rounded-lg ${darkMode ? "bg-gray-600" : "bg-white"} shadow-sm`}
+                      className={`p-4 rounded-lg ${darkMode ? 'bg-gray-600' : 'bg-white'} shadow-sm`}
                     >
                       <p
-                        className={`text-sm ${darkMode ? "text-gray-300" : "text-gray-600"}`}
+                        className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}
                       >
                         Principal Amount
                       </p>
@@ -226,10 +224,10 @@ export default function EMICalculatorPage() {
                     </div>
 
                     <div
-                      className={`p-4 rounded-lg ${darkMode ? "bg-gray-600" : "bg-white"} shadow-sm`}
+                      className={`p-4 rounded-lg ${darkMode ? 'bg-gray-600' : 'bg-white'} shadow-sm`}
                     >
                       <p
-                        className={`text-sm ${darkMode ? "text-gray-300" : "text-gray-600"}`}
+                        className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}
                       >
                         Total Payment
                       </p>
@@ -241,14 +239,14 @@ export default function EMICalculatorPage() {
 
                   <div className="mt-6">
                     <h4
-                      className={`text-md font-medium mb-3 ${darkMode ? "text-gray-300" : "text-gray-700"}`}
+                      className={`text-md font-medium mb-3 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}
                     >
                       Payment Breakdown
                     </h4>
                     <div className="flex items-center space-x-2 mb-2">
                       <div className="w-4 h-4 bg-indigo-500 rounded-sm"></div>
                       <span
-                        className={`text-sm ${darkMode ? "text-gray-300" : "text-gray-700"}`}
+                        className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}
                       >
                         Principal: ৳ {loanAmount.toFixed(2)}
                       </span>
@@ -256,7 +254,7 @@ export default function EMICalculatorPage() {
                     <div className="flex items-center space-x-2">
                       <div className="w-4 h-4 bg-red-400 rounded-sm"></div>
                       <span
-                        className={`text-sm ${darkMode ? "text-gray-300" : "text-gray-700"}`}
+                        className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}
                       >
                         Interest: ৳ {totalInterest.toFixed(2)}
                       </span>

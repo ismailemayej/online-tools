@@ -1,12 +1,12 @@
-"use client";
-import { useState, useEffect } from "react";
+'use client';
+import { useState, useEffect } from 'react';
 import {
   CalculatorIcon,
   CalendarIcon,
   ArrowPathIcon,
   SunIcon,
   MoonIcon,
-} from "@heroicons/react/24/outline";
+} from '@heroicons/react/24/outline';
 
 type AgeResult = {
   years: number;
@@ -22,30 +22,30 @@ type DateInput = {
 
 export default function AgeCalculator() {
   const [dateInput, setDateInput] = useState<DateInput>({
-    day: "",
-    month: "",
-    year: "",
+    day: '',
+    month: '',
+    year: '',
   });
   const [age, setAge] = useState<AgeResult | null>(null);
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState<string>('');
   const [darkMode, setDarkMode] = useState<boolean>(false);
 
   // Check system preference and handle changes
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     setDarkMode(mediaQuery.matches);
 
     const handler = (e: MediaQueryListEvent) => setDarkMode(e.matches);
-    mediaQuery.addEventListener("change", handler);
-    return () => mediaQuery.removeEventListener("change", handler);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
   }, []);
 
   // Apply dark mode class to document
   useEffect(() => {
     if (darkMode) {
-      document.documentElement.classList.add("dark");
+      document.documentElement.classList.add('dark');
     } else {
-      document.documentElement.classList.remove("dark");
+      document.documentElement.classList.remove('dark');
     }
   }, [darkMode]);
 
@@ -61,7 +61,7 @@ export default function AgeCalculator() {
     const { day, month, year } = dateInput;
 
     if (!day || !month || !year) {
-      setError("Please enter complete date");
+      setError('Please enter complete date');
       setAge(null);
       return;
     }
@@ -71,19 +71,19 @@ export default function AgeCalculator() {
     const yearNum = parseInt(year, 10);
 
     if (isNaN(dayNum) || isNaN(monthNum) || isNaN(yearNum)) {
-      setError("Please enter valid numbers");
+      setError('Please enter valid numbers');
       setAge(null);
       return;
     }
 
     if (monthNum < 1 || monthNum > 12) {
-      setError("Month must be between 1-12");
+      setError('Month must be between 1-12');
       setAge(null);
       return;
     }
 
     if (dayNum < 1 || dayNum > 31) {
-      setError("Day must be between 1-31");
+      setError('Day must be between 1-31');
       setAge(null);
       return;
     }
@@ -102,18 +102,18 @@ export default function AgeCalculator() {
       birthDate.getMonth() !== monthNum - 1 ||
       birthDate.getFullYear() !== yearNum
     ) {
-      setError("Invalid date");
+      setError('Invalid date');
       setAge(null);
       return;
     }
 
     if (birthDate > today) {
-      setError("Birth date cannot be in the future");
+      setError('Birth date cannot be in the future');
       setAge(null);
       return;
     }
 
-    setError("");
+    setError('');
 
     let years = today.getFullYear() - birthDate.getFullYear();
     let months = today.getMonth() - birthDate.getMonth();
@@ -139,12 +139,12 @@ export default function AgeCalculator() {
 
   const resetCalculator = (): void => {
     setDateInput({
-      day: "",
-      month: "",
-      year: "",
+      day: '',
+      month: '',
+      year: '',
     });
     setAge(null);
-    setError("");
+    setError('');
   };
 
   return (
@@ -248,16 +248,16 @@ export default function AgeCalculator() {
             </div>
           </div>
           <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
-            Born on{" "}
+            Born on{' '}
             {new Date(
               parseInt(dateInput.year),
               parseInt(dateInput.month) - 1,
               parseInt(dateInput.day)
-            ).toLocaleDateString("en-US", {
-              weekday: "long",
-              year: "numeric",
-              month: "long",
-              day: "numeric",
+            ).toLocaleDateString('en-US', {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
             })}
           </p>
         </div>
