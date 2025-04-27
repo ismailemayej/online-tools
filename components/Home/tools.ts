@@ -3,6 +3,7 @@ import {
   CalculatorIcon,
   CursorArrowRaysIcon,
   DocumentTextIcon,
+  EyeDropperIcon,
   LockClosedIcon,
   QrCodeIcon,
 } from '@heroicons/react/24/outline';
@@ -15,6 +16,16 @@ export const tools = [
     category: 'calculators',
     color: 'bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300',
   },
+  // {
+  //   name: 'PDF to Word Converter',
+  //   icon: FileTextIcon,
+  //   description: 'Easily convert PDF files into editable Word documents',
+  //   href: '/pdf-to-word-converter',
+  //   category: 'converters',
+  //   color:
+  //     'bg-purple-100 text-purple-600 dark:bg-purple-900 dark:text-purple-300',
+  // },
+
   {
     name: 'Word & Character Counter',
     icon: DocumentTextIcon,
@@ -69,6 +80,30 @@ export const tools = [
     href: '/typing-speed-tester',
     category: 'productivity',
     color: 'bg-pink-100 text-pink-600 dark:bg-pink-900 dark:text-pink-300',
+  },
+  {
+    name: 'Color Picker',
+    icon: EyeDropperIcon, // or any icon related to colors
+    description: 'Pick and copy colors easily for your designs',
+    href: '/color-picker',
+    category: 'tools',
+    color: 'bg-pink-100 text-pink-600 dark:bg-pink-900 dark:text-pink-300',
+  },
+  {
+    name: 'JSON Formatter',
+    icon: 'CodeBracketSquareIcon',
+    description: 'Format, validate, and minify JSON data with ease',
+    href: '/json-formatter',
+    category: 'development',
+    color:
+      'bg-purple-100 text-purple-600 dark:bg-purple-900 dark:text-purple-300',
+    features: [
+      'Real-time JSON formatting',
+      'Syntax validation',
+      'Beautify/Minify toggle',
+      'Error highlighting',
+      'Copy & download options',
+    ],
   },
 ];
 
