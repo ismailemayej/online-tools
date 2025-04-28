@@ -9,6 +9,7 @@ import {
   LockClosedIcon,
   QrCodeIcon,
 } from '@heroicons/react/24/outline';
+import { Code } from 'lucide-react';
 export const tools = [
   {
     name: 'Age Calculator',
@@ -123,6 +124,14 @@ export const tools = [
       'Convert between various units like length, weight, and volume',
     href: '/unit-converter',
     category: 'calculators',
+    color: 'bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-300',
+  },
+  {
+    name: 'Base64 Encoder',
+    icon: Code,
+    description: 'Encode text to Base64 format easily',
+    href: '/base64-encoder',
+    category: 'encoders',
     color: 'bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-300',
   },
 ];

@@ -3,7 +3,5 @@ export default function BlogLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <div className="inline-block text-center justify-center">{children}</div>
-  );
+  return <div className="w-full">{children}</div>;
 }

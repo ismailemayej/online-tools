@@ -1,9 +1,9 @@
+'use client';
 import { useState } from 'react';
 
 export default function Base64Encoder() {
   const [input, setInput] = useState<string>('');
   const [output, setOutput] = useState<string>('');
-  const [darkMode, setDarkMode] = useState<boolean>(false);
 
   const handleEncode = () => {
     try {
@@ -23,105 +23,46 @@ export default function Base64Encoder() {
     }
   };
 
-  const toggleDarkMode = () => {
-    setDarkMode((prev) => !prev);
-  };
-
   return (
-    <div
-      style={{
-        ...styles.container,
-        backgroundColor: darkMode ? '#1a1a1a' : '#f9f9f9',
-        color: darkMode ? '#f1f1f1' : '#333',
-      }}
-    >
-      <button style={styles.toggleButton} onClick={toggleDarkMode}>
-        {darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-      </button>
-      <h1 style={styles.heading}>Base64 Encoder / Decoder</h1>
-      <textarea
-        style={{
-          ...styles.textarea,
-          backgroundColor: darkMode ? '#333' : '#fff',
-          color: darkMode ? '#f1f1f1' : '#000',
-          border: darkMode ? '1px solid #555' : '1px solid #ccc',
-        }}
-        placeholder="Enter your text here..."
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      />
-      <div style={styles.buttonContainer}>
-        <button style={styles.button} onClick={handleEncode}>
-          Encode
-        </button>
-        <button style={styles.button} onClick={handleDecode}>
-          Decode
-        </button>
-      </div>
-      <textarea
-        style={{
-          ...styles.textarea,
-          backgroundColor: darkMode ? '#333' : '#fff',
-          color: darkMode ? '#f1f1f1' : '#000',
-          border: darkMode ? '1px solid #555' : '1px solid #ccc',
-        }}
-        placeholder="Result will appear here..."
-        value={output}
-        readOnly
-      />
+    <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+      <header className="bg-white dark:bg-gray-800 shadow-sm py-4 px-6">
+        <h1 className="text-2xl font-bold text-center">
+          Base64 Encoder / Decoder
+        </h1>
+      </header>
+
+      <main className="flex-1 container mx-auto px-4 py-8 max-w-3xl flex flex-col">
+        <div className="flex-1 flex flex-col space-y-6">
+          <textarea
+            className="flex-1 w-full p-4 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            placeholder="Enter your text here..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+          />
+
+          <div className="flex space-x-4 justify-center">
+            <button
+              onClick={handleEncode}
+              className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+            >
+              Encode
+            </button>
+            <button
+              onClick={handleDecode}
+              className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
+            >
+              Decode
+            </button>
+          </div>
+
+          <textarea
+            className="flex-1 w-full p-4 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            placeholder="Result will appear here..."
+            value={output}
+            readOnly
+          />
+        </div>
+      </main>
     </div>
   );
 }
-
-const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    maxWidth: '600px',
-    margin: '50px auto',
-    padding: '20px',
-    textAlign: 'center',
-    borderRadius: '12px',
-    boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
-    transition: 'background-color 0.3s, color 0.3s',
-  },
-  heading: {
-    fontSize: '28px',
-    marginBottom: '20px',
-  },
-  textarea: {
-    width: '100%',
-    height: '120px',
-    padding: '10px',
-    fontSize: '16px',
-    marginBottom: '20px',
-    borderRadius: '8px',
-    resize: 'none',
-    transition: 'background-color 0.3s, color 0.3s, border 0.3s',
-  },
-  buttonContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    gap: '10px',
-    marginBottom: '20px',
-  },
-  button: {
-    padding: '10px 20px',
-    fontSize: '16px',
-    cursor: 'pointer',
-    borderRadius: '8px',
-    border: 'none',
-    backgroundColor: '#0070f3',
-    color: 'white',
-    transition: 'background-color 0.3s',
-  },
-  toggleButton: {
-    padding: '8px 16px',
-    fontSize: '14px',
-    marginBottom: '20px',
-    cursor: 'pointer',
-    borderRadius: '8px',
-    border: 'none',
-    backgroundColor: '#555',
-    color: 'white',
-    transition: 'background-color 0.3s',
-  },
-};
