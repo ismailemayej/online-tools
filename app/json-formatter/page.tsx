@@ -1,5 +1,5 @@
 import JSONFormatter from '@/components/Tools/JSON-Formatter/JSONFormatter';
 
-export default function AgeCalculatorPage() {
+export default function JsonFormatterPage() {
   return <JSONFormatter />;
 }

@@ -1,6 +1,8 @@
 import {
+  ArrowsRightLeftIcon,
   BanknotesIcon,
   CalculatorIcon,
+  CodeBracketIcon,
   CursorArrowRaysIcon,
   DocumentTextIcon,
   EyeDropperIcon,
@@ -104,6 +106,24 @@ export const tools = [
       'Error highlighting',
       'Copy & download options',
     ],
+  },
+  {
+    name: 'Meta Tag Generator',
+    icon: CodeBracketIcon,
+    description: 'Easily generate SEO-friendly meta tags for your website',
+    href: '/meta-generator',
+    category: 'productivity',
+    color:
+      'bg-indigo-100 text-indigo-600 dark:bg-indigo-900 dark:text-indigo-300',
+  },
+  {
+    name: 'Unit Converter',
+    icon: ArrowsRightLeftIcon,
+    description:
+      'Convert between various units like length, weight, and volume',
+    href: '/unit-converter',
+    category: 'calculators',
+    color: 'bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-300',
   },
 ];
 

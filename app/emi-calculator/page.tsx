@@ -1,5 +1,5 @@
 import EMICalculatorPage from '@/components/Tools/emi-calculator/EmiCalculator';
 
-export default function WordCounterPage() {
+export default function EmiCalculatorPage() {
   return <EMICalculatorPage />;
 }

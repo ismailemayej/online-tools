@@ -1,17 +1,15 @@
 'use client';
 import { useState, useEffect } from 'react';
-import {
-  CalculatorIcon,
-  CalendarIcon,
-  ArrowPathIcon,
-  SunIcon,
-  MoonIcon,
-} from '@heroicons/react/24/outline';
+import { CalculatorIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
 
 type AgeResult = {
   years: number;
   months: number;
+  weeks: number;
   days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
 };
 
 type DateInput = {
@@ -30,7 +28,7 @@ export default function AgeCalculator() {
   const [error, setError] = useState<string>('');
   const [darkMode, setDarkMode] = useState<boolean>(false);
 
-  // Check system preference and handle changes
+  // Check system preference
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     setDarkMode(mediaQuery.matches);
@@ -40,7 +38,6 @@ export default function AgeCalculator() {
     return () => mediaQuery.removeEventListener('change', handler);
   }, []);
 
-  // Apply dark mode class to document
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add('dark');
@@ -115,25 +112,26 @@ export default function AgeCalculator() {
 
     setError('');
 
-    let years = today.getFullYear() - birthDate.getFullYear();
-    let months = today.getMonth() - birthDate.getMonth();
-    let days = today.getDate() - birthDate.getDate();
+    const diffMs = today.getTime() - birthDate.getTime();
+    const diffSeconds = Math.floor(diffMs / 1000);
 
-    if (days < 0) {
-      months--;
-      const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
-      days += lastMonth.getDate();
-    }
+    const years = today.getFullYear() - birthDate.getFullYear();
+    const months = years * 12 + (today.getMonth() - birthDate.getMonth());
 
-    if (months < 0) {
-      years--;
-      months += 12;
-    }
+    const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    const weeks = Math.floor(days / 7);
+    const hours = Math.floor(diffMs / (1000 * 60 * 60));
+    const minutes = Math.floor(diffMs / (1000 * 60));
+    const seconds = diffSeconds;
 
     setAge({
       years,
       months,
+      weeks,
       days,
+      hours,
+      minutes,
+      seconds,
     });
   };
 
@@ -163,42 +161,36 @@ export default function AgeCalculator() {
           Your Date of Birth
         </label>
         <div className="flex space-x-2">
-          <div className="flex-1">
-            <input
-              type="number"
-              name="day"
-              placeholder="DD"
-              value={dateInput.day}
-              onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-              min="1"
-              max="31"
-            />
-          </div>
-          <div className="flex-1">
-            <input
-              type="number"
-              name="month"
-              placeholder="MM"
-              value={dateInput.month}
-              onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-              min="1"
-              max="12"
-            />
-          </div>
-          <div className="flex-1">
-            <input
-              type="number"
-              name="year"
-              placeholder="YYYY"
-              value={dateInput.year}
-              onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-              min="1900"
-              max={new Date().getFullYear()}
-            />
-          </div>
+          <input
+            type="number"
+            name="day"
+            placeholder="DD"
+            value={dateInput.day}
+            onChange={handleInputChange}
+            className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:text-white"
+            min="1"
+            max="31"
+          />
+          <input
+            type="number"
+            name="month"
+            placeholder="MM"
+            value={dateInput.month}
+            onChange={handleInputChange}
+            className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:text-white"
+            min="1"
+            max="12"
+          />
+          <input
+            type="number"
+            name="year"
+            placeholder="YYYY"
+            value={dateInput.year}
+            onChange={handleInputChange}
+            className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:text-white"
+            min="1900"
+            max={new Date().getFullYear()}
+          />
         </div>
         {error && (
           <p className="mt-2 text-sm text-red-600 dark:text-red-400">{error}</p>
@@ -208,14 +200,14 @@ export default function AgeCalculator() {
       <div className="flex space-x-4">
         <button
           onClick={calculateAge}
-          className="flex-1 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white py-2 px-4 rounded-md flex items-center justify-center transition-colors duration-200"
+          className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md flex items-center justify-center"
         >
           <CalculatorIcon className="h-5 w-5 mr-2" />
           Calculate Age
         </button>
         <button
           onClick={resetCalculator}
-          className="flex-1 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 py-2 px-4 rounded-md flex items-center justify-center transition-colors duration-200"
+          className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-md flex items-center justify-center"
         >
           <ArrowPathIcon className="h-5 w-5 mr-2" />
           Reset
@@ -223,29 +215,24 @@ export default function AgeCalculator() {
       </div>
 
       {age && (
-        <div className="mt-6 p-4 bg-blue-50 dark:bg-gray-700 rounded-md transition-colors duration-300">
+        <div className="mt-6 p-4 bg-blue-50 dark:bg-gray-700 rounded-md">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
-            Your Age
+            Your Age Details
           </h2>
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div className="bg-white dark:bg-gray-800 p-3 rounded shadow transition-colors duration-300">
-              <p className="text-3xl font-bold text-blue-500 dark:text-blue-400">
-                {age.years}
-              </p>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Years</p>
-            </div>
-            <div className="bg-white dark:bg-gray-800 p-3 rounded shadow transition-colors duration-300">
-              <p className="text-3xl font-bold text-blue-500 dark:text-blue-400">
-                {age.months}
-              </p>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Months</p>
-            </div>
-            <div className="bg-white dark:bg-gray-800 p-3 rounded shadow transition-colors duration-300">
-              <p className="text-3xl font-bold text-blue-500 dark:text-blue-400">
-                {age.days}
-              </p>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Days</p>
-            </div>
+          <div className="grid grid-cols-2 gap-4 text-center">
+            {Object.entries(age).map(([key, value]) => (
+              <div
+                key={key}
+                className="bg-white dark:bg-gray-800 p-3 rounded shadow"
+              >
+                <p className="text-2xl font-bold text-blue-500 dark:text-blue-400">
+                  {value}
+                </p>
+                <p className="text-sm capitalize text-gray-600 dark:text-gray-400">
+                  {key}
+                </p>
+              </div>
+            ))}
           </div>
           <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
             Born on{' '}

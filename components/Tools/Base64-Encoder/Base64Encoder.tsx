@@ -3,6 +3,7 @@ import { useState } from 'react';
 export default function Base64Encoder() {
   const [input, setInput] = useState<string>('');
   const [output, setOutput] = useState<string>('');
+  const [darkMode, setDarkMode] = useState<boolean>(false);
 
   const handleEncode = () => {
     try {
@@ -22,11 +23,29 @@ export default function Base64Encoder() {
     }
   };
 
+  const toggleDarkMode = () => {
+    setDarkMode((prev) => !prev);
+  };
+
   return (
-    <div style={styles.container}>
+    <div
+      style={{
+        ...styles.container,
+        backgroundColor: darkMode ? '#1a1a1a' : '#f9f9f9',
+        color: darkMode ? '#f1f1f1' : '#333',
+      }}
+    >
+      <button style={styles.toggleButton} onClick={toggleDarkMode}>
+        {darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+      </button>
       <h1 style={styles.heading}>Base64 Encoder / Decoder</h1>
       <textarea
-        style={styles.textarea}
+        style={{
+          ...styles.textarea,
+          backgroundColor: darkMode ? '#333' : '#fff',
+          color: darkMode ? '#f1f1f1' : '#000',
+          border: darkMode ? '1px solid #555' : '1px solid #ccc',
+        }}
         placeholder="Enter your text here..."
         value={input}
         onChange={(e) => setInput(e.target.value)}
@@ -40,7 +59,12 @@ export default function Base64Encoder() {
         </button>
       </div>
       <textarea
-        style={styles.textarea}
+        style={{
+          ...styles.textarea,
+          backgroundColor: darkMode ? '#333' : '#fff',
+          color: darkMode ? '#f1f1f1' : '#000',
+          border: darkMode ? '1px solid #555' : '1px solid #ccc',
+        }}
         placeholder="Result will appear here..."
         value={output}
         readOnly
@@ -55,14 +79,13 @@ const styles: { [key: string]: React.CSSProperties } = {
     margin: '50px auto',
     padding: '20px',
     textAlign: 'center',
-    backgroundColor: '#f9f9f9',
     borderRadius: '12px',
     boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+    transition: 'background-color 0.3s, color 0.3s',
   },
   heading: {
     fontSize: '28px',
     marginBottom: '20px',
-    color: '#333',
   },
   textarea: {
     width: '100%',
@@ -71,8 +94,8 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontSize: '16px',
     marginBottom: '20px',
     borderRadius: '8px',
-    border: '1px solid #ccc',
     resize: 'none',
+    transition: 'background-color 0.3s, color 0.3s, border 0.3s',
   },
   buttonContainer: {
     display: 'flex',
@@ -87,6 +110,17 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: '8px',
     border: 'none',
     backgroundColor: '#0070f3',
+    color: 'white',
+    transition: 'background-color 0.3s',
+  },
+  toggleButton: {
+    padding: '8px 16px',
+    fontSize: '14px',
+    marginBottom: '20px',
+    cursor: 'pointer',
+    borderRadius: '8px',
+    border: 'none',
+    backgroundColor: '#555',
     color: 'white',
     transition: 'background-color 0.3s',
   },
