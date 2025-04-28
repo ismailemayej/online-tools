@@ -1,5 +1,6 @@
-//src/components/navbar.tsx
+// src/components/navbar.tsx
 'use client';
+
 import {
   Navbar as HeroUINavbar,
   NavbarContent,
@@ -20,8 +21,32 @@ import clsx from 'clsx';
 import { siteConfig } from '@/config/site';
 import { ThemeSwitch } from '@/components/theme-switch';
 import { SearchIcon, Logo } from '@/components/icons';
+import { Avatar, Select, SelectItem } from '@nextui-org/react';
+import { tools } from './Home/tools';
 
 export const Navbar = () => {
+  const users = [
+    {
+      id: 1,
+      name: 'Tony Reichert',
+      role: 'CEO',
+      team: 'Management',
+      status: 'active',
+      age: '29',
+      avatar: 'https://d2u8k2ocievbld.cloudfront.net/memojis/male/1.png',
+      email: 'tony.reichert@example.com',
+    },
+    {
+      id: 2,
+      name: 'Zoey Lang',
+      role: 'Tech Lead',
+      team: 'Development',
+      status: 'paused',
+      age: '25',
+      avatar: 'https://d2u8k2ocievbld.cloudfront.net/memojis/female/1.png',
+      email: 'zoey.lang@example.com',
+    },
+  ];
   const searchInput = (
     <Input
       aria-label="Search tools"
@@ -45,6 +70,7 @@ export const Navbar = () => {
 
   return (
     <HeroUINavbar maxWidth="xl" position="sticky" isBordered>
+      {/* Start Content */}
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-2" href="/">
@@ -52,61 +78,65 @@ export const Navbar = () => {
             <p className="font-bold text-inherit">{siteConfig.name}</p>
           </NextLink>
         </NavbarBrand>
+
+        {/* Main Navigation Items */}
         <ul className="hidden lg:flex gap-6 justify-start ml-6">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
-              <NextLink
+              <Link
                 className={clsx(
                   linkStyles({ color: 'foreground' }),
                   'data-[active=true]:text-primary data-[active=true]:font-medium hover:text-primary transition-colors',
                   item.highlight && 'text-primary font-medium'
                 )}
-                color="foreground"
                 href={item.href}
               >
                 {item.icon && <item.icon className="inline mr-2 w-4 h-4" />}
                 {item.label}
-              </NextLink>
+              </Link>
             </NavbarItem>
           ))}
         </ul>
       </NavbarContent>
 
+      {/* End Content */}
       <NavbarContent
         className="hidden sm:flex basis-1/5 sm:basis-full"
         justify="end"
       >
-        <NavbarItem className="hidden lg:flex w-64">{searchInput}</NavbarItem>
-        <NavbarItem className="hidden sm:flex gap-2">
-          {/* <Link
-            isExternal
-            aria-label="Feedback"
-            href={siteConfig.links.feedback}
-            className="p-2 rounded-full hover:bg-default-100"
+        <NavbarItem className="hidden lg:flex w-64">
+          <Select
+            className="w-56"
+            items={tools}
+            // labelPlacement="outside"
+            placeholder="All Tools"
           >
-            <FeedbackIcon className="text-default-600 w-5 h-5" />
-          </Link> */}
+            {(tools) => (
+              <SelectItem key={tools.name} textValue={tools.name}>
+                <Link href={tools.href} color="foreground">
+                  <div className="flex gap-2 items-center w-52">
+                    <tools.icon className="h-6 w-6" />
+                    <div className="flex flex-col">
+                      <span className="text-small">{tools.name}</span>
+                    </div>
+                  </div>
+                </Link>
+              </SelectItem>
+            )}
+          </Select>
+        </NavbarItem>
+        <NavbarItem className="hidden sm:flex gap-2">
           <ThemeSwitch />
         </NavbarItem>
-        {/* <NavbarItem className="hidden md:flex">
-          <Button
-            as={Link}
-            className="text-sm font-medium"
-            href="/all-tools"
-            startContent={<ToolsIcon className="text-current w-4 h-4" />}
-            variant="flat"
-            color="primary"
-          >
-            All Tools
-          </Button>
-        </NavbarItem> */}
       </NavbarContent>
 
+      {/* Mobile Toggle Button */}
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>
 
+      {/* Mobile Menu */}
       <NavbarMenu>
         <div className="mx-4 mt-4">{searchInput}</div>
         <div className="mx-4 mt-6 flex flex-col gap-3">
@@ -123,24 +153,20 @@ export const Navbar = () => {
               </Link>
             </NavbarMenuItem>
           ))}
-        </div>
-        <div className="mx-4 mt-8 pt-4 border-t border-default-200 flex gap-4">
-          {/* <Link
-            isExternal
-            aria-label="GitHub"
-            href={siteConfig.links.github}
-            className="text-default-600"
-          >
-            <GithubIcon className="text-2xl" />
-          </Link> */}
-          {/* <Link
-            isExternal
-            aria-label="Feedback"
-            href={siteConfig.links.feedback}
-            className="text-default-600"
-          >
-            <FeedbackIcon className="text-2xl" />
-          </Link> */}
+
+          {/* Related Items in Mobile Menu */}
+          {siteConfig.relatedItems.map((item, index) => (
+            <NavbarMenuItem key={`related-${index}`}>
+              <Link
+                href={item.href}
+                size="lg"
+                color="secondary"
+                className="w-full py-3 px-2 rounded-lg hover:bg-default-100"
+              >
+                {item.label}
+              </Link>
+            </NavbarMenuItem>
+          ))}
         </div>
       </NavbarMenu>
     </HeroUINavbar>

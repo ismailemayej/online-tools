@@ -1,121 +1,37 @@
-import {
-  WrenchIcon,
-  DocumentTextIcon,
-  CodeBracketIcon,
-  PhotoIcon,
-  ChartBarIcon,
-  CalculatorIcon,
-  ArrowPathIcon,
-  ChatBubbleLeftEllipsisIcon,
-} from '@heroicons/react/24/outline';
+import { HomeIcon, InfoIcon } from 'lucide-react';
 
 export const siteConfig = {
-  name: 'ToolKit Pro',
-  description:
-    'Your all-in-one online tools collection for developers, designers, and creators.',
-  url: 'https://toolkitpro.vercel.app',
+  name: 'Your Site Name',
+  description: 'Your site description',
+  url: 'https://yoursite.com',
   links: {
-    github: 'https://github.com/yourusername/toolkit-pro',
-    feedback: 'https://github.com/yourusername/toolkit-pro/issues',
+    github: 'https://github.com/your-repo',
+    feedback: 'https://feedback.yoursite.com',
     twitter: 'https://twitter.com/yourhandle',
   },
   navItems: [
     {
-      label: 'Text Tools',
-      href: '/text',
-      icon: DocumentTextIcon,
+      label: 'Home',
+      href: '/',
+      icon: HomeIcon,
       highlight: true,
     },
     {
-      label: 'Code Tools',
-      href: '/code',
-      icon: CodeBracketIcon,
-    },
-    {
-      label: 'Image Tools',
-      href: '/image',
-      icon: PhotoIcon,
-    },
-    {
-      label: 'Data Tools',
-      href: '/data',
-      icon: ChartBarIcon,
-    },
-    {
-      label: 'Calculators',
-      href: '/calculators',
-      icon: CalculatorIcon,
+      label: 'About',
+      href: '/about',
+      icon: InfoIcon,
+      highlight: false,
     },
   ],
   navMenuItems: [
     {
-      label: 'All Tools',
-      href: '/all-tools',
-      icon: WrenchIcon,
-    },
-    {
-      label: 'Text Tools',
-      href: '/text',
-      icon: DocumentTextIcon,
-    },
-    {
-      label: 'Code Tools',
-      href: '/code',
-      icon: CodeBracketIcon,
-    },
-    {
-      label: 'Image Tools',
-      href: '/image',
-      icon: PhotoIcon,
-    },
-    {
-      label: 'Data Tools',
-      href: '/data',
-      icon: ChartBarIcon,
-    },
-    {
-      label: 'Calculators',
-      href: '/calculators',
-      icon: CalculatorIcon,
-    },
-    {
-      label: 'Feedback',
-      href: '/feedback',
-      icon: ChatBubbleLeftEllipsisIcon,
+      label: 'Contact',
+      href: '/contact',
+      icon: InfoIcon,
     },
   ],
-  toolCategories: [
-    {
-      name: 'Text',
-      slug: 'text',
-      tools: [
-        {
-          name: 'Case Converter',
-          description: 'Convert text between different cases',
-          href: '/text/case-converter',
-          icon: DocumentTextIcon,
-        },
-        {
-          name: 'Word Counter',
-          description: 'Count words, characters, and more',
-          href: '/text/word-counter',
-          icon: DocumentTextIcon,
-        },
-      ],
-    },
-    {
-      name: 'Code',
-      slug: 'code',
-      tools: [
-        {
-          name: 'JSON Formatter',
-          description: 'Format and validate JSON',
-          href: '/code/json-formatter',
-          icon: CodeBracketIcon,
-        },
-      ],
-    },
+  relatedItems: [
+    { label: 'Related Tool 1', href: '/related-tool-1', icon: null },
+    { label: 'Related Tool 2', href: '/related-tool-2', icon: null },
   ],
 };
-
-export type SiteConfig = typeof siteConfig;

@@ -3,6 +3,7 @@ import {
   BanknotesIcon,
   CalculatorIcon,
   CodeBracketIcon,
+  CodeBracketSquareIcon,
   CursorArrowRaysIcon,
   DocumentTextIcon,
   EyeDropperIcon,
@@ -94,7 +95,7 @@ export const tools = [
   },
   {
     name: 'JSON Formatter',
-    icon: 'CodeBracketSquareIcon',
+    icon: CodeBracketSquareIcon,
     description: 'Format, validate, and minify JSON data with ease',
     href: '/json-formatter',
     category: 'development',
@@ -121,7 +122,7 @@ export const tools = [
     name: 'Unit Converter',
     icon: ArrowsRightLeftIcon,
     description:
-      'Convert between various units like length, weight, and volume',
+      'Convert between various units like lengt+h, weight, and volume',
     href: '/unit-converter',
     category: 'calculators',
     color: 'bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-300',
