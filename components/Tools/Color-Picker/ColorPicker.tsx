@@ -92,17 +92,6 @@ export default function ColorPickerPage() {
             <PaintBrushIcon className="w-8 h-8" />
             Color Picker
           </h1>
-          <button
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className={`p-2 rounded-full ${theme === 'dark' ? 'bg-gray-700 text-yellow-300' : ' text-gray-700'}`}
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? (
-              <SunIcon className="w-5 h-5" />
-            ) : (
-              <MoonIcon className="w-5 h-5" />
-            )}
-          </button>
         </div>
 
         <div

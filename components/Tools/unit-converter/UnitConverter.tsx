@@ -103,7 +103,9 @@ export default function UnitConverter() {
     setFromUnit(e.target.value as keyof (typeof units)['length']);
   };
 
-  const handleToUnitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleToUnitChange: (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => void = (e) => {
     setToUnit(e.target.value as keyof (typeof units)['length']);
   };
 
@@ -113,112 +115,126 @@ export default function UnitConverter() {
 
   return mounted ? (
     <div
-      className={`w-full max-w-4xl mx-auto p-6 bg-${theme === 'dark' ? 'gray-900' : 'white'} rounded-xl shadow-xl transition-all`}
+      className={`min-h-screen flex flex-col items-center justify-start  py-8 ${
+        theme === 'dark' ? 'bg-gray-900 text-white' : ' text-gray-900'
+      } transition-colors duration-300`}
     >
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-3xl font-extrabold text-${theme === 'dark' ? 'white' : 'gray-900'}">
-          Unit Converter
-        </h2>
-      </div>
-
-      <div className="space-y-6">
-        <div className="flex gap-6 justify-center">
-          <button
-            onClick={() => handleCategoryChange('length')}
-            className={`${
-              category === 'length'
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-200 text-gray-700'
-            } p-4 rounded-full shadow-md hover:shadow-lg transition-all duration-300 ease-in-out flex items-center`}
-          >
-            <RulerIcon className="h-6 w-6 mr-2" />
-            Length
-          </button>
-          <button
-            onClick={() => handleCategoryChange('weight')}
-            className={`${
-              category === 'weight'
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-200 text-gray-700'
-            } p-4 rounded-full shadow-md hover:shadow-lg transition-all duration-300 ease-in-out flex items-center`}
-          >
-            <ScaleIcon className="h-6 w-6 mr-2" />
-            Weight
-          </button>
-          <button
-            onClick={() => handleCategoryChange('temperature')}
-            className={`${
-              category === 'temperature'
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-200 text-gray-700'
-            } p-4 rounded-full shadow-md hover:shadow-lg transition-all duration-300 ease-in-out flex items-center`}
-          >
-            <ThermometerSunIcon className="h-6 w-6 mr-2" />
-            Temperature
-          </button>
+      <div className="w-full max-w-4xl">
+        <div className="flex items-center justify-between mb-6 dark:bg-gray-900 bg-blue-800 text-white dark: p-4 rounded-xl ">
+          <h2 className=" text-2xl lg:text-3xl font-extrabold">
+            Unit Converter
+          </h2>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <div className="flex flex-col">
-            <label className="text-lg font-medium">From Value</label>
-            <input
-              type="number"
-              value={fromValue}
-              onChange={handleFromValueChange}
-              className="mt-2 p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-              placeholder="Enter value"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="text-lg font-medium">To Value</label>
-            <input
-              type="text"
-              value={toValue}
-              readOnly
-              className="mt-2 p-4 border border-gray-300 rounded-xl bg-gray-100 text-gray-500"
-              placeholder="Converted value"
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 mt-6">
-          <div className="flex flex-col">
-            <label className="text-lg font-medium">From Unit</label>
-            <select
-              value={fromUnit}
-              onChange={handleFromUnitChange}
-              className="mt-2 p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-            >
-              {Object.keys(units[category]).map((unitKey) => (
-                <option key={unitKey} value={unitKey}>
-                  {
-                    (units[category] as Record<string, { name: string }>)[
-                      unitKey
-                    ].name
-                  }
-                </option>
+        {/* Main container */}
+        <div className="w-full bg-white dark:bg-gray-800 p-6 md:p-10 rounded-xl shadow-xl transition-all">
+          <div className="space-y-6">
+            {/* Category Buttons */}
+            <div className="flex flex-wrap gap-4 justify-center">
+              {[
+                {
+                  label: 'Length',
+                  icon: <RulerIcon className="h-6 w-6 mr-2" />,
+                  value: 'length',
+                },
+                {
+                  label: 'Weight',
+                  icon: <ScaleIcon className="h-6 w-6 mr-2" />,
+                  value: 'weight',
+                },
+                {
+                  label: 'Temperature',
+                  icon: <ThermometerSunIcon className="h-6 w-6 mr-2" />,
+                  value: 'temperature',
+                },
+              ].map(({ label, icon, value }) => (
+                <button
+                  key={value}
+                  onClick={() => handleCategoryChange(value as UnitCategory)}
+                  className={`flex items-center px-4 py-2 rounded-full shadow-md hover:shadow-lg transition-all duration-300 ${
+                    category === value
+                      ? 'bg-blue-500 text-white'
+                      : 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
+                  }`}
+                >
+                  {icon}
+                  {label}
+                </button>
               ))}
-            </select>
-          </div>
+            </div>
 
-          <div className="flex flex-col">
-            <label className="text-lg font-medium">To Unit</label>
-            <select
-              value={toUnit}
-              onChange={handleToUnitChange}
-              className="mt-2 p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-            >
-              {Object.keys(units[category]).map((unitKey) => (
-                <option key={unitKey} value={unitKey}>
-                  {
-                    (units[category] as Record<string, { name: string }>)[
-                      unitKey
-                    ].name
-                  }
-                </option>
-              ))}
-            </select>
+            {/* Input fields */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="flex flex-col">
+                <label className="text-lg font-medium dark:text-white">
+                  From Value
+                </label>
+                <input
+                  type="number"
+                  value={fromValue}
+                  onChange={handleFromValueChange}
+                  className="mt-2 p-4 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-black dark:text-white"
+                  placeholder="Enter value"
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-lg font-medium dark:text-white">
+                  To Value
+                </label>
+                <input
+                  type="text"
+                  value={toValue}
+                  readOnly
+                  className="mt-2 p-4 border border-gray-300 dark:border-gray-600 rounded-xl bg-gray-100 dark:bg-gray-600 text-black dark:text-white"
+                  placeholder="Converted value"
+                />
+              </div>
+            </div>
+
+            {/* Unit Selectors */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="flex flex-col">
+                <label className="text-lg font-medium dark:text-white">
+                  From Unit
+                </label>
+                <select
+                  value={fromUnit}
+                  onChange={handleFromUnitChange}
+                  className="mt-2 p-4 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-black dark:text-white"
+                >
+                  {Object.keys(units[category]).map((unitKey) => (
+                    <option key={unitKey} value={unitKey}>
+                      {
+                        (units[category] as Record<string, { name: string }>)[
+                          unitKey
+                        ].name
+                      }
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex flex-col">
+                <label className="text-lg font-medium dark:text-white">
+                  To Unit
+                </label>
+                <select
+                  value={toUnit}
+                  onChange={handleToUnitChange}
+                  className="mt-2 p-4 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-black dark:text-white"
+                >
+                  {Object.keys(units[category]).map((unitKey) => (
+                    <option key={unitKey} value={unitKey}>
+                      {
+                        (units[category] as Record<string, { name: string }>)[
+                          unitKey
+                        ].name
+                      }
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
           </div>
         </div>
       </div>

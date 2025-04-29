@@ -53,7 +53,7 @@ export default function EMICalculatorPage() {
     <div
       className={`min-h-screen transition-colors duration-300 ${darkMode ? 'bg-gray-900 text-gray-100' : 'bg-gradient-to-br from-indigo-50 to-blue-100'}`}
     >
-      <div className="w-full max-w-6xl mx-auto p-4">
+      <div className="w-full max-w-6xl mx-auto">
         <div
           className={`rounded-3xl shadow-xl overflow-hidden transition-colors duration-300 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}
         >

@@ -107,10 +107,10 @@ export default function MetaTagGenerator() {
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900 text-gray-100' : 'bg-gray-50 text-gray-900'}`}
+      className={`min-h-screen transition-colors duration-300 ${theme === 'dark' ? ' text-gray-100' : ' text-gray-900'}`}
     >
-      <div className="container mx-auto px-4 py-12">
-        <div className="flex justify-between items-center mb-8">
+      <div className="container mx-auto pb-12">
+        <div className="flex justify-between items-center  mb-8 dark:bg-gray-900 bg-blue-700 p-4 rounded-xl text-white px-3 py-8 text-center">
           <h1 className="text-3xl font-bold flex items-center gap-2">
             <CodeBracketIcon className="w-8 h-8" />
             Meta Tag Generator
@@ -118,7 +118,7 @@ export default function MetaTagGenerator() {
         </div>
 
         <div
-          className={`rounded-xl p-6 shadow-lg ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}
+          className={`rounded-xl p-3 shadow-lg ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Tag Editor Section */}
@@ -131,20 +131,20 @@ export default function MetaTagGenerator() {
                 {tags.map((tag, index) => (
                   <div
                     key={index}
-                    className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-50'}`}
+                    className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'}`}
                   >
                     <div className="flex justify-between items-center mb-2">
                       <h3 className="font-medium">{tag.name || 'New Tag'}</h3>
                       <div className="flex gap-2">
                         <button
                           onClick={() => toggleTag(index)}
-                          className={`p-1 rounded ${theme === 'dark' ? 'hover:bg-gray-600' : 'hover:bg-gray-200'}`}
+                          className={`p-1 rounded ${theme === 'dark' ? 'hover:bg-gray-600' : 'hover:bg-gray-100'}`}
                         >
                           <EyeIcon className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => removeTag(index)}
-                          className={`p-1 rounded ${theme === 'dark' ? 'hover:bg-gray-600' : 'hover:bg-gray-200'}`}
+                          className={`p-1 rounded ${theme === 'dark' ? 'hover:bg-gray-600' : 'hover:bg-gray-100'}`}
                         >
                           <TrashIcon className="w-4 h-4" />
                         </button>
@@ -192,7 +192,7 @@ export default function MetaTagGenerator() {
 
                 {/* Add New Tag */}
                 <div
-                  className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-50'}`}
+                  className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'}`}
                 >
                   <h3 className="font-medium mb-3">Add New Tag</h3>
                   <div className="space-y-3">
@@ -268,7 +268,7 @@ export default function MetaTagGenerator() {
                       className="flex flex-wrap gap-1 items-center"
                     >
                       <span
-                        className={`px-2 py-1 rounded text-xs ${theme === 'dark' ? 'bg-gray-600' : 'bg-gray-200'}`}
+                        className={`px-2 py-1 rounded text-xs ${theme === 'dark' ? 'bg-gray-600' : 'bg-gray-100'}`}
                       >
                         {tag.name}
                       </span>

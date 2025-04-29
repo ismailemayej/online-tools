@@ -357,7 +357,7 @@ export default function QRCodeGenerator() {
   };
 
   return (
-    <div className="w-full mx-auto p-4">
+    <div className="w-full mx-auto">
       <h1 className="text-3xl font-bold flex items-center gap-2 mb-6">
         <QrCodeIcon className="h-8 w-8 text-blue-500" />
         QR Code Generator

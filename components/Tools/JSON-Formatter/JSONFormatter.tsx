@@ -136,35 +136,33 @@ export default function JSONFormatter() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="w-full mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            JSON Formatter
-          </h1>
-          <p className="text-lg text-gray-600">
+    <div className="min-h-screen py-12">
+      <div className="w-full mx-auto ">
+        <div className="bg-blue-800 p-4 rounded-lg text-center mb-8  text-white">
+          <h1 className="text-3xl font-bold mb-2">JSON Formatter</h1>
+          <p className="text-lg text-white ">
             Format, validate, and minify your JSON data
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Input Section */}
-          <div className="bg-white rounded-xl shadow-md overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-              <h2 className="text-lg font-medium text-gray-900 flex items-center gap-2">
+          <div className=" dark:bg-gray-950 rounded-xl shadow-md overflow-hidden">
+            <div className="px-6 py-4 border-b-2 dark:bg-slate-900 border-gray-600 flex justify-between items-center">
+              <h2 className="text-lg font-medium dark:text-white text-gray-900 flex items-center gap-2">
                 <CodeBracketIcon className="w-5 h-5" />
                 Input JSON
               </h2>
               <div className="flex gap-2">
                 <button
                   onClick={loadExample}
-                  className="inline-flex items-center px-3 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                  className="inline-flex items-center px-3 py-1 border border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700  dark:bg-slate-900 dark:text-white bg-white hover:bg-gray-50"
                 >
                   Load Example
                 </button>
                 <button
                   onClick={clearAll}
-                  className="inline-flex items-center px-3 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                  className="inline-flex items-center px-3 py-1 border border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700  dark:bg-slate-900 dark:text-white bg-white hover:bg-gray-50"
                 >
                   Clear
                 </button>
@@ -175,7 +173,7 @@ export default function JSONFormatter() {
                 ref={textareaRef}
                 value={input}
                 onChange={handleInputChange}
-                className="w-full h-96 font-mono text-sm p-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                className="w-full h-96 font-mono text-sm p-4 border border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Paste your JSON here..."
                 spellCheck="false"
               />
@@ -195,9 +193,9 @@ export default function JSONFormatter() {
           </div>
 
           {/* Output Section */}
-          <div className="bg-white rounded-xl shadow-md overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-              <h2 className="text-lg font-medium text-gray-900 flex items-center gap-2">
+          <div className="dark:bg-gray-950 rounded-xl shadow-md overflow-hidden">
+            <div className="px-6 py-4 border-b-2 border-gray-600 flex justify-between items-center dark:text-white text-gray-900">
+              <h2 className="text-lg font-medium dark:text-white text-gray-900 flex items-center gap-2">
                 {error ? (
                   <ExclamationTriangleIcon className="w-5 h-5 text-red-500" />
                 ) : output ? (
@@ -214,7 +212,7 @@ export default function JSONFormatter() {
               <div className="flex gap-2">
                 <button
                   onClick={toggleMinify}
-                  className="inline-flex items-center px-3 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                  className="inline-flex items-center px-3 py-1 border border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:bg-slate-900 dark:text-white bg-white hover:bg-gray-50"
                 >
                   {isMinified ? (
                     <ArrowsPointingOutIcon className="w-4 h-4 mr-1" />
@@ -227,7 +225,7 @@ export default function JSONFormatter() {
                   <>
                     <button
                       onClick={copyToClipboard}
-                      className="inline-flex items-center px-3 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                      className="inline-flex items-center px-3 py-1 border border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
                     >
                       {copied ? (
                         <ClipboardDocumentCheckIcon className="w-4 h-4 mr-1 text-green-500" />
@@ -238,7 +236,7 @@ export default function JSONFormatter() {
                     </button>
                     <button
                       onClick={downloadJSON}
-                      className="inline-flex items-center px-3 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                      className="inline-flex items-center px-3 py-1 border border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
                     >
                       <ArrowDownTrayIcon className="w-4 h-4 mr-1" />
                       Download
@@ -251,12 +249,12 @@ export default function JSONFormatter() {
               {output ? (
                 <pre
                   ref={outputRef}
-                  className="h-96 overflow-auto font-mono text-sm p-4 bg-gray-50 rounded-md border border-gray-300"
+                  className="h-96 overflow-auto font-mono text-sm p-4 dark:bg-transparent bg-gray-50 rounded-md border dark:text-white border-gray-600"
                 >
                   {output}
                 </pre>
               ) : (
-                <div className="h-96 flex items-center justify-center bg-gray-50 rounded-md border border-gray-300">
+                <div className="h-96 flex items-center justify-center rounded-md border border-gray-600">
                   <div className="text-center text-gray-500">
                     <CodeBracketIcon className="mx-auto h-12 w-12" />
                     <h3 className="mt-2 text-sm font-medium">

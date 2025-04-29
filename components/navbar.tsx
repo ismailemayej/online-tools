@@ -25,28 +25,6 @@ import { Avatar, Select, SelectItem } from '@nextui-org/react';
 import { tools } from './Home/tools';
 
 export const Navbar = () => {
-  const users = [
-    {
-      id: 1,
-      name: 'Tony Reichert',
-      role: 'CEO',
-      team: 'Management',
-      status: 'active',
-      age: '29',
-      avatar: 'https://d2u8k2ocievbld.cloudfront.net/memojis/male/1.png',
-      email: 'tony.reichert@example.com',
-    },
-    {
-      id: 2,
-      name: 'Zoey Lang',
-      role: 'Tech Lead',
-      team: 'Development',
-      status: 'paused',
-      age: '25',
-      avatar: 'https://d2u8k2ocievbld.cloudfront.net/memojis/female/1.png',
-      email: 'zoey.lang@example.com',
-    },
-  ];
   const searchInput = (
     <Input
       aria-label="Search tools"
@@ -138,32 +116,21 @@ export const Navbar = () => {
 
       {/* Mobile Menu */}
       <NavbarMenu>
-        <div className="mx-4 mt-4">{searchInput}</div>
         <div className="mx-4 mt-6 flex flex-col gap-3">
-          {siteConfig.navMenuItems.map((item, index) => (
-            <NavbarMenuItem key={`${item}-${index}`}>
-              <Link
-                color={index === 0 ? 'primary' : 'foreground'}
-                href={item.href}
-                size="lg"
-                className="w-full py-3 px-2 rounded-lg hover:bg-default-100"
-              >
-                {item.icon && <item.icon className="inline mr-3 w-5 h-5" />}
-                {item.label}
-              </Link>
-            </NavbarMenuItem>
-          ))}
-
           {/* Related Items in Mobile Menu */}
-          {siteConfig.relatedItems.map((item, index) => (
-            <NavbarMenuItem key={`related-${index}`}>
+          {tools.map((item, index) => (
+            <NavbarMenuItem
+              key={`related-${index}`}
+              className="flex gap-2 justify-center items-center"
+            >
+              <item.icon className="h-6 w-6" />
               <Link
                 href={item.href}
                 size="lg"
-                color="secondary"
+                color="success"
                 className="w-full py-3 px-2 rounded-lg hover:bg-default-100"
               >
-                {item.label}
+                {item.name}
               </Link>
             </NavbarMenuItem>
           ))}

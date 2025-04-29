@@ -168,7 +168,7 @@ export default function TypingSpeedTester() {
 
   return (
     <div
-      className={`min-h-screen flex flex-col items-center justify-center p-4 transition-colors duration-300 ${darkMode ? 'bg-gray-900 text-gray-100' : 'bg-gradient-to-br from-blue-50 to-indigo-50 text-gray-800'}`}
+      className={`min-h-screen flex flex-col items-center justify-center transition-colors duration-300 ${darkMode ? 'bg-gray-900 text-gray-100' : 'bg-gradient-to-br from-blue-50 to-indigo-50 text-gray-800'}`}
     >
       <div
         className={`w-full rounded-2xl shadow-xl overflow-hidden transition-colors duration-300 ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}
@@ -176,7 +176,7 @@ export default function TypingSpeedTester() {
         {/* Header */}
         <div className="bg-gradient-to-r from-indigo-600 to-blue-600 p-6 text-white flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold flex items-center gap-2">
+            <h1 className="lg:text-3xl text-xl font-bold flex items-center gap-2">
               <KeyboardIcon className="w-8 h-8" />
               Typing Speed Test
             </h1>
@@ -200,7 +200,7 @@ export default function TypingSpeedTester() {
         </div>
 
         {/* Main content */}
-        <div className="p-6 md:p-8 space-y-8">
+        <div className="p-3 md:p-8 space-y-8">
           {/* Stats bar */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div

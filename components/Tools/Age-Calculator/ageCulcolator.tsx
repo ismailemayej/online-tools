@@ -219,7 +219,7 @@ export default function AgeCalculator() {
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
             Your Age Details
           </h2>
-          <div className="grid grid-cols-2 gap-4 text-center">
+          <div className="grid lg:grid-cols-2 grid-cols-1 gap-4 lg:text-center">
             {Object.entries(age).map(([key, value]) => (
               <div
                 key={key}

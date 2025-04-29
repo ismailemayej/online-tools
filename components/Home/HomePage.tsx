@@ -16,9 +16,9 @@ export default function HomePage() {
   const [hoveredTool, setHoveredTool] = useState<number | null>(null);
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-xl">
-      <div className="rounded-xl relative bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-800 dark:to-indigo-800">
-        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 text-center">
+    <div className=" rounded-xl">
+      <div className="rounded-xl relative bg-gradient-to-r  from-blue-600 to-indigo-600 dark:from-blue-800 dark:to-indigo-800">
+        <div className="max-w-7xl dark:bg-gray-800 rounded-xl mx-auto py-12 px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
             Free Online Tools for Everyone
           </h1>
@@ -31,7 +31,7 @@ export default function HomePage() {
 
       {/* Popular Tools Section */}
       <div id="tools" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5">
           {tools.map((tool, index) => (
             <Link
               key={tool.name}
