@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import html2canvas from 'html2canvas';
 import Cropper from 'react-easy-crop';
 import { Area } from 'react-easy-crop/types';
 import { getCroppedImg } from '@/utils/basic-info/cropImage';
 import bg from '@/public/eid-bg.jpg';
+import defaultProfile from '@/public/default-profile.png';
 
 interface Position {
   x: number;
@@ -16,43 +17,138 @@ export default function PosterGenerator() {
   // Text states
   const [name, setName] = useState('মোঃ ইসমাইল হোসাইন');
   const [occupation, setOccupation] = useState('ইমাম,হাসা মাদ্রাসা মসজিদ');
+  const [fontSize, setFontSize] = useState(16);
 
   // Image states
-  const [imageSrc, setImageSrc] = useState<string | null>(null);
-  const [croppedImage, setCroppedImage] = useState<string | null>(null);
+  const [imageSrc, setImageSrc] = useState<string | null>(defaultProfile.src); // Set default profile image
+  const [croppedImage, setCroppedImage] = useState<string | null>(
+    defaultProfile.src
+  ); // Set default profile image
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [showCropper, setShowCropper] = useState(false);
 
   // Drag and drop states
-  const [namePosition, setNamePosition] = useState<Position>({ x: 0, y: 0 });
-  const [occupationPosition, setOccupationPosition] = useState<Position>({
-    x: 0,
-    y: 0,
-  });
-  const [imagePosition, setImagePosition] = useState<Position>({ x: 0, y: 0 });
+  const [namePosition, setNamePosition] = useState<Position>({
+    x: 95,
+    y: 578,
+  }); // Default position for name (bottom left)
+  const [imagePosition, setImagePosition] = useState<Position>({
+    x: 240,
+    y: 420,
+  }); // Default position for image (center)
   const [isDragging, setIsDragging] = useState(false);
-  const [activeElement, setActiveElement] = useState<
-    'name' | 'occupation' | 'image' | null
-  >(null);
+  const [activeElement, setActiveElement] = useState<'name' | 'image' | null>(
+    null
+  );
 
   // Refs
   const posterRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLDivElement>(null);
-  const occupationRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
 
   // Other states
   const [isSharing, setIsSharing] = useState(false);
+  const [posterSize, setPosterSize] = useState({ width: 600, height: 800 });
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Crop handlers
-  const onCropComplete = useCallback(
-    (_croppedArea: Area, croppedPixels: Area) => {
-      setCroppedAreaPixels(croppedPixels);
-    },
-    []
-  );
+  // Set initial positions when component mounts
+  useEffect(() => {
+    const checkIfMobile = () => window.innerWidth < 768;
+    setIsMobile(checkIfMobile());
+
+    const handleResize = () => {
+      setIsMobile(checkIfMobile());
+      if (posterRef.current) {
+        const rect = posterRef.current.getBoundingClientRect();
+        setPosterSize({ width: rect.width, height: rect.height });
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    // Load fonts
+    const loadFonts = async () => {
+      const font = new FontFace('BanglaFont', 'url(/fonts/SolaimanLipi.ttf)');
+      try {
+        const loadedFont = await font.load();
+        document.fonts.add(loadedFont);
+        setFontsLoaded(true);
+      } catch (error) {
+        console.error('Failed to load font:', error);
+        setFontsLoaded(true); // Continue even if font fails to load
+      }
+    };
+
+    loadFonts();
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Combined touch and mouse handlers
+  const handleStart = (
+    element: 'name' | 'image',
+    e: React.TouchEvent | React.MouseEvent
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+    setActiveElement(element);
+  };
+
+  const handleMove = (e: React.TouchEvent | React.MouseEvent) => {
+    if (!isDragging || !activeElement || !posterRef.current) return;
+
+    const posterRect = posterRef.current.getBoundingClientRect();
+    let clientX, clientY;
+
+    if ('touches' in e) {
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    } else {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
+
+    const x =
+      ((clientX - posterRect.left) / posterRect.width) * posterSize.width;
+    const y =
+      ((clientY - posterRect.top) / posterRect.height) * posterSize.height;
+
+    switch (activeElement) {
+      case 'name':
+        setNamePosition({ x, y });
+        break;
+      case 'image':
+        setImagePosition({ x, y });
+        break;
+    }
+  };
+
+  const handleEnd = () => {
+    setIsDragging(false);
+    setActiveElement(null);
+  };
+
+  // Add event listeners for mobile
+  useEffect(() => {
+    const posterElement = posterRef.current;
+    if (!posterElement) return;
+
+    const options = { passive: false };
+
+    // Touch events
+    posterElement.addEventListener('touchmove', handleMove as any, options);
+    posterElement.addEventListener('touchend', handleEnd, options);
+
+    return () => {
+      posterElement.removeEventListener('touchmove', handleMove as any);
+      posterElement.removeEventListener('touchend', handleEnd);
+    };
+  }, [isDragging, activeElement]);
 
   // Image upload handler
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,26 +169,78 @@ export default function PosterGenerator() {
       const cropped = await getCroppedImg(imageSrc, croppedAreaPixels);
       setCroppedImage(cropped);
       setShowCropper(false);
-
-      // Set initial position for the image after cropping
-      if (posterRef.current) {
-        const rect = posterRef.current.getBoundingClientRect();
-        setImagePosition({
-          x: rect.width / 2 - 48, // Center horizontally (assuming 96px width)
-          y: rect.height - 120, // Position near bottom
-        });
-      }
     }
   };
 
-  // Download poster handler
+  // Download poster handler with fixed aspect ratio
   const downloadPoster = async () => {
+    if (!fontsLoaded) {
+      alert('Please wait while fonts load...');
+      return;
+    }
+
     if (posterRef.current) {
-      const canvas = await html2canvas(posterRef.current);
-      const link = document.createElement('a');
-      link.download = 'eid-poster.png';
-      link.href = canvas.toDataURL();
-      link.click();
+      // Create a temporary container with fixed size
+      const tempContainer = document.createElement('div');
+      tempContainer.style.position = 'fixed';
+      tempContainer.style.left = '-9999px';
+      tempContainer.style.width = '600px';
+      tempContainer.style.height = '800px';
+      tempContainer.style.backgroundColor = 'white';
+      document.body.appendChild(tempContainer);
+
+      // Clone the poster content
+      const clone = posterRef.current.cloneNode(true) as HTMLElement;
+      clone.style.width = '600px';
+      clone.style.height = '800px';
+      clone.style.margin = '0';
+      clone.style.padding = '0';
+
+      // Apply styles to ensure consistent rendering
+      const nameElement = clone.querySelector('.name-element') as HTMLElement;
+      if (nameElement) {
+        nameElement.style.left = '100px';
+        nameElement.style.top = '700px';
+        nameElement.style.transform = 'translate(-50%, -50%)';
+      }
+
+      const imageElement = clone.querySelector('.image-element') as HTMLElement;
+      if (imageElement) {
+        imageElement.style.left = '300px';
+        imageElement.style.top = '450px';
+        imageElement.style.transform = 'translate(-50%, -50%)';
+      }
+
+      // Force cover style for download
+      const bgImage = clone.querySelector('.poster-bg') as HTMLElement;
+      if (bgImage) {
+        bgImage.style.objectFit = 'cover';
+        bgImage.style.width = '100%';
+        bgImage.style.height = '100%';
+      }
+
+      tempContainer.appendChild(clone);
+
+      try {
+        const canvas = await html2canvas(tempContainer, {
+          scale: 2,
+          logging: false,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: 'white',
+          width: 600,
+          height: 800,
+        });
+
+        const link = document.createElement('a');
+        link.download = 'eid-poster.png';
+        link.href = canvas.toDataURL('image/png', 1.0);
+        link.click();
+      } catch (error) {
+        console.error('Error generating image:', error);
+      } finally {
+        document.body.removeChild(tempContainer);
+      }
     }
   };
 
@@ -101,9 +249,63 @@ export default function PosterGenerator() {
     if (posterRef.current) {
       setIsSharing(true);
       try {
-        const canvas = await html2canvas(posterRef.current);
+        // Create a temporary container for consistent sizing
+        const tempContainer = document.createElement('div');
+        tempContainer.style.position = 'fixed';
+        tempContainer.style.left = '-9999px';
+        tempContainer.style.width = '600px';
+        tempContainer.style.height = '800px';
+        tempContainer.style.backgroundColor = 'white';
+        document.body.appendChild(tempContainer);
+
+        // Clone the poster content
+        const clone = posterRef.current.cloneNode(true) as HTMLElement;
+        clone.style.width = '600px';
+        clone.style.height = '800px';
+        clone.style.margin = '0';
+        clone.style.padding = '0';
+
+        // Apply styles to ensure consistent rendering
+        const nameElement = clone.querySelector('.name-element') as HTMLElement;
+        if (nameElement) {
+          nameElement.style.left = '100px';
+          nameElement.style.top = '700px';
+          nameElement.style.transform = 'translate(-50%, -50%)';
+        }
+
+        const imageElement = clone.querySelector(
+          '.image-element'
+        ) as HTMLElement;
+        if (imageElement) {
+          imageElement.style.left = '300px';
+          imageElement.style.top = '450px';
+          imageElement.style.transform = 'translate(-50%, -50%)';
+        }
+
+        // Force cover style for sharing
+        const bgImage = clone.querySelector('.poster-bg') as HTMLElement;
+        if (bgImage) {
+          bgImage.style.objectFit = 'cover';
+          bgImage.style.width = '100%';
+          bgImage.style.height = '100%';
+        }
+
+        tempContainer.appendChild(clone);
+
+        const canvas = await html2canvas(clone, {
+          scale: 2,
+          logging: false,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: 'white',
+          width: 600,
+          height: 800,
+        });
+
+        document.body.removeChild(tempContainer);
+
         const blob = await new Promise<Blob | null>((resolve) => {
-          canvas.toBlob(resolve);
+          canvas.toBlob(resolve, 'image/png', 1.0);
         });
 
         if (blob && navigator.share) {
@@ -117,7 +319,7 @@ export default function PosterGenerator() {
           });
         } else {
           const link = document.createElement('a');
-          link.href = canvas.toDataURL();
+          link.href = canvas.toDataURL('image/png', 1.0);
           link.target = '_blank';
           link.rel = 'noopener noreferrer';
           link.click();
@@ -130,53 +332,24 @@ export default function PosterGenerator() {
     }
   };
 
-  // Drag and drop handlers
-  const handleMouseDown = (
-    element: 'name' | 'occupation' | 'image',
-    e: React.MouseEvent
-  ) => {
-    e.stopPropagation();
-    setIsDragging(true);
-    setActiveElement(element);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !activeElement || !posterRef.current) return;
-
-    const posterRect = posterRef.current.getBoundingClientRect();
-    const x = e.clientX - posterRect.left;
-    const y = e.clientY - posterRect.top;
-
-    switch (activeElement) {
-      case 'name':
-        setNamePosition({ x, y });
-        break;
-      case 'occupation':
-        setOccupationPosition({ x, y });
-        break;
-      case 'image':
-        setImagePosition({ x, y });
-        break;
-    }
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-    setActiveElement(null);
-  };
-
   // Reset positions handler
   const resetPositions = () => {
-    if (!posterRef.current) return;
-
-    const rect = posterRef.current.getBoundingClientRect();
-    const centerX = rect.width / 2;
-    const bottomY = rect.height - 100;
-
-    setNamePosition({ x: centerX - 100, y: bottomY - 60 });
-    setOccupationPosition({ x: centerX - 100, y: bottomY - 30 });
-    setImagePosition({ x: centerX - 48, y: bottomY - 120 });
+    setNamePosition({ x: 100, y: 700 }); // Bottom left
+    setImagePosition({ x: 300, y: 450 }); // Center
   };
+
+  // Font size adjustment handlers
+  const increaseFontSize = () => {
+    setFontSize((prev) => Math.min(prev + 2, 32)); // Max 32px
+  };
+
+  const decreaseFontSize = () => {
+    setFontSize((prev) => Math.max(prev - 2, 10)); // Min 10px
+  };
+
+  function onCropComplete(croppedArea: Area, croppedAreaPixels: Area): void {
+    setCroppedAreaPixels(croppedAreaPixels);
+  }
 
   return (
     <div className="min-h-screen bangla bg-gradient-to-br from-green-50 to-gray-50 dark:from-gray-800 dark:to-gray-900">
@@ -226,6 +399,28 @@ export default function PosterGenerator() {
                   value={occupation}
                   onChange={(e) => setOccupation(e.target.value)}
                 />
+              </div>
+            </div>
+
+            {/* Font Size Controls */}
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                লেখার সাইজ
+              </label>
+              <div className="flex items-center space-x-4">
+                <button
+                  onClick={decreaseFontSize}
+                  className="px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded-md"
+                >
+                  ছোট
+                </button>
+                <span className="text-sm">{fontSize}px</span>
+                <button
+                  onClick={increaseFontSize}
+                  className="px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded-md"
+                >
+                  বড়
+                </button>
               </div>
             </div>
 
@@ -342,44 +537,53 @@ export default function PosterGenerator() {
                 <div
                   ref={posterRef}
                   className="relative w-full max-w-md aspect-[3/4] bg-white dark:bg-gray-700 shadow-lg rounded-xl overflow-hidden"
-                  onMouseMove={handleMouseMove}
-                  onMouseUp={handleMouseUp}
-                  onMouseLeave={handleMouseUp}
+                  onMouseMove={handleMove}
+                  onMouseUp={handleEnd}
+                  onMouseLeave={handleEnd}
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    minHeight: '600px',
+                    background: 'white',
+                  }}
                 >
-                  <img
-                    src={bg.src}
-                    alt="Background"
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
+                  {/* Background image with responsive scaling */}
+                  <div className="absolute inset-0 w-full h-full flex justify-center items-center bg-black overflow-hidden">
+                    <img
+                      src={bg.src}
+                      alt="Background"
+                      className={`poster-bg ${isMobile ? 'object-contain h-full w-auto' : 'object-cover w-full h-full'}`}
+                      crossOrigin="anonymous"
+                    />
+                  </div>
 
-                  {/* Name - draggable */}
+                  {/* Name and Occupation - draggable */}
                   <div
                     ref={nameRef}
-                    className="absolute cursor-move select-none"
+                    className="absolute cursor-move select-none touch-none name-element"
                     style={{
                       left: `${namePosition.x}px`,
                       top: `${namePosition.y}px`,
                       transform: 'translate(-50%, -50%)',
+                      zIndex: 10,
+                      textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
+                      textAlign: 'center',
+                      fontFamily:
+                        "BanglaFont, 'Tiro Bangla', serif, Arial, sans-serif",
                     }}
-                    onMouseDown={(e) => handleMouseDown('name', e)}
+                    onMouseDown={(e) => handleStart('name', e)}
+                    onTouchStart={(e) => handleStart('name', e)}
                   >
-                    <h3 className="text-lg font-semibold text-white dark:text-gray-100">
+                    <h3
+                      style={{ fontSize: `${fontSize}px` }}
+                      className="headline"
+                    >
                       {name}
                     </h3>
-                  </div>
-
-                  {/* Occupation - draggable */}
-                  <div
-                    ref={occupationRef}
-                    className="absolute cursor-move select-none mt-12"
-                    style={{
-                      left: `${occupationPosition.x}px`,
-                      top: `${occupationPosition.y}px`,
-                      transform: 'translate(-50%, -50%)',
-                    }}
-                    onMouseDown={(e) => handleMouseDown('occupation', e)}
-                  >
-                    <p className="text-sm font-medium text-white dark:text-gray-200">
+                    <p
+                      style={{ fontSize: `${fontSize - 4}px` }}
+                      className="sub-headline mt-[-4px]"
+                    >
                       {occupation}
                     </p>
                   </div>
@@ -388,18 +592,20 @@ export default function PosterGenerator() {
                   {croppedImage && (
                     <div
                       ref={imageRef}
-                      className="absolute cursor-move"
+                      className="absolute cursor-move touch-none image-element"
                       style={{
                         left: `${imagePosition.x}px`,
                         top: `${imagePosition.y}px`,
                         transform: 'translate(-50%, -50%)',
+                        zIndex: 10,
                       }}
-                      onMouseDown={(e) => handleMouseDown('image', e)}
+                      onMouseDown={(e) => handleStart('image', e)}
+                      onTouchStart={(e) => handleStart('image', e)}
                     >
                       <img
                         src={croppedImage}
                         alt="User"
-                        className="w-36 h-36 rounded-full object-cover border-4  border-orange-400 shadow-xl"
+                        className="w-32 h-32 md:w-32 md:h-32 rounded-full object-cover border-4 border-orange-300 shadow-xl"
                       />
                     </div>
                   )}
