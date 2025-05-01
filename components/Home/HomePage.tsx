@@ -29,14 +29,14 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Popular Tools Section */}
-      <div id="tools" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5">
+      {/* Main Tools Section */}
+      <div id="tools" className="w-full mx-auto py-12">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {tools.map((tool, index) => (
             <Link
               key={tool.name}
               href={tool.href}
-              className={`relative group col-span-1 flex flex-col items-center p-6 rounded-2xl bg-white dark:bg-gray-800 shadow-md hover:shadow-xl transition-all duration-300 ${hoveredTool === index ? 'ring-2 ring-blue-500 scale-105' : ''}`}
+              className={`relative group col-span-1 flex gap-4 items-center p-3 rounded-2xl bg-white dark:bg-gray-800 shadow-md hover:shadow-xl transition-all duration-300 ${hoveredTool === index ? 'ring-2 ring-blue-500 scale-105' : ''}`}
               onMouseEnter={() => setHoveredTool(index)}
               onMouseLeave={() => setHoveredTool(null)}
             >
@@ -47,25 +47,17 @@ export default function HomePage() {
 
               {/* Large Interactive Icon */}
               <div
-                className={`mb-6 p-5 rounded-full ${tool.color} transition-all duration-300 ${hoveredTool === index ? 'scale-110' : ''}`}
+                className={` p-5 rounded-full ${tool.color} transition-all duration-300 ${hoveredTool === index ? 'scale-110' : ''}`}
               >
-                <tool.icon className="h-10 w-10" />
+                <tool.icon className="h-4 w-4" />
               </div>
 
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white text-center mb-2">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white text-center">
                 {tool.name}
               </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
+              {/* <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
                 {tool.description}
-              </p>
-
-              {/* Animated Button */}
-              <div className="mt-6 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                <span className="inline-flex items-center text-sm font-medium text-blue-600 dark:text-blue-400">
-                  Use tool
-                  <ArrowRightIcon className="ml-1 h-4 w-4" />
-                </span>
-              </div>
+              </p> */}
             </Link>
           ))}
         </div>

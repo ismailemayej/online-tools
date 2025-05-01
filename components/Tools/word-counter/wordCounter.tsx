@@ -81,7 +81,7 @@ export default function WordCounter() {
 
   return (
     <div className="w-full mx-auto">
-      <h1 className="text-3xl font-bold flex items-center gap-2 mb-6">
+      <h1 className="text-2xl lg:text-3xl p-4 bg-blue-800 rounded-xl dark:bg-gray-900 text-white font-bold flex items-center gap-2 mb-6">
         <DocumentTextIcon className="h-8 w-8 text-blue-500" />
         Word & Character Counter
       </h1>

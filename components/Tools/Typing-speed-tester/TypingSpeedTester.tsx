@@ -306,7 +306,7 @@ export default function TypingSpeedTester() {
           {/* Text display */}
           <div
             ref={textRef}
-            className={`p-6 rounded-lg border text-2xl leading-relaxed min-h-32 font-mono ${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-gray-50 border-gray-200'}`}
+            className={`p-6 rounded-lg border text-lg lg:text-2xl leading-relaxed min-h-32 font-mono ${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-gray-50 border-gray-200'}`}
           >
             {renderTextWithHighlighting()}
           </div>

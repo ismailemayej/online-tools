@@ -31,7 +31,7 @@ export const tools = [
   // },
 
   {
-    name: 'Word & Character Counter',
+    name: 'Word Counter',
     icon: DocumentTextIcon,
     description: 'Count words, characters, sentences, and reading time',
     href: '/word-counter',

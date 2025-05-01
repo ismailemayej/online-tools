@@ -28,6 +28,7 @@ import {
   Textarea,
 } from '@nextui-org/react';
 import QRCode from 'qrcode';
+import SocialShare from '@/components/SocialShare';
 
 type QRContentType = 'url' | 'text' | 'email' | 'sms' | 'wifi' | 'contact';
 
@@ -358,7 +359,7 @@ export default function QRCodeGenerator() {
 
   return (
     <div className="w-full mx-auto">
-      <h1 className="text-3xl font-bold flex items-center gap-2 mb-6">
+      <h1 className=" flex   gap-2 mb-6 text-2xl lg:text-3xl p-4 bg-blue-800 rounded-xl dark:bg-gray-900 text-white font-bold">
         <QrCodeIcon className="h-8 w-8 text-blue-500" />
         QR Code Generator
       </h1>
@@ -394,11 +395,8 @@ export default function QRCodeGenerator() {
                 <Tab key="wifi" title="WiFi" />
                 <Tab key="contact" title="Contact" />
               </Tabs>
-
               <div className="mt-4">{renderContentInputs()}</div>
-
               <Divider className="my-4" />
-
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Select
                   label="Error Correction"
@@ -548,6 +546,7 @@ export default function QRCodeGenerator() {
           </ul>
         </CardBody>
       </Card>
+      <SocialShare />
     </div>
   );
 }
